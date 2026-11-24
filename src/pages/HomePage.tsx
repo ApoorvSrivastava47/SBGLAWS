@@ -89,7 +89,7 @@ const COLLAGE_SLOTS = [
 ];
 
 export function HomePage() {
-  const { siteSettings, events, teamMembers, announcements } = usePlatform();
+  const { siteSettings, events, announcements } = usePlatform();
 
   const upcomingEvents = events
     .filter((ev) => {
@@ -97,9 +97,6 @@ export function HomePage() {
       return status === 'upcoming' || status === 'ongoing';
     })
     .slice(0, 3);
-
-  const featuredTeam = teamMembers.filter((m) => m.isFeatured).slice(0, 4);
-  const previewTeam = featuredTeam.length > 0 ? featuredTeam : teamMembers.slice(0, 4);
 
   return (
     <div className="bg-white text-[#08070C]">
@@ -504,8 +501,8 @@ export function HomePage() {
 
       {/* 3.6 Community Preview */}
       <section className="border-b border-[#08070C]/10 bg-[#E4D5FF]/25">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-16 md:py-24">
-          <RevealSection className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-16">
+          <RevealSection className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
             <div>
               <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-3">
                 04 · People Behind the Community
@@ -522,50 +519,6 @@ export function HomePage() {
               <ArrowRight className="w-4 h-4 text-[#FF9900] transition-transform duration-150 group-hover:translate-x-0.5" />
             </Link>
           </RevealSection>
-
-          {previewTeam.length === 0 ? (
-            <RevealSection className="border border-[#08070C]/15 bg-white p-10 md:p-12">
-              <p className="font-mono text-xs uppercase tracking-wider text-[#243A68] mb-2">
-                Directory Awaiting Profiles
-              </p>
-              <p className="text-base text-[#08070C]/75 max-w-2xl leading-relaxed">
-                Team profiles, faculty coordinators, and student leads are added directly through
-                the Team Management console. No fictional profiles are displayed.
-              </p>
-            </RevealSection>
-          ) : (
-            <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {previewTeam.map((member) => (
-                <StaggerItem key={member.id} className="flex">
-                  <Link
-                    to="/team"
-                    className="group w-full bg-white border border-[#08070C]/14 hover:border-[#08070C] hover:-translate-y-0.5 transition-all duration-200 flex flex-col"
-                  >
-                    <ImageSlot
-                      src={member.photoUrl}
-                      alt={`${member.fullName} — ${member.designation}`}
-                      slotLabel="Member Portrait Slot"
-                      aspectClass="aspect-[4/5]"
-                      variant="lavender"
-                      roundedClass="rounded-none"
-                      imgClassName={member.imageClassName || 'object-[50%_18%]'}
-                      hoverZoom
-                      className="border-0 border-b border-[#08070C]/10"
-                    />
-                    <div className="p-5 space-y-1.5">
-                      <p className="font-mono text-[11px] uppercase tracking-wider text-[#243A68] truncate">
-                        {[member.institution, member.category].filter(Boolean).join(' · ')}
-                      </p>
-                      <h3 className="font-display text-lg font-bold tracking-tight group-hover:text-[#243A68] transition-colors">
-                        {member.fullName}
-                      </h3>
-                      <p className="text-sm text-[#08070C]/75 leading-snug">{member.designation}</p>
-                    </div>
-                  </Link>
-                </StaggerItem>
-              ))}
-            </StaggerGrid>
-          )}
         </div>
       </section>
 
