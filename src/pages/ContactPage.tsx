@@ -104,26 +104,22 @@ export function ContactPage() {
         {/* Institutional Details + Campus Map Placeholder */}
         <div className="lg:col-span-5 space-y-8">
           <div className="space-y-6 border border-[#08070C]/15 p-7 bg-[#E4D5FF]/25">
-            <div className="flex items-start gap-3.5">
-              <Mail className="w-5 h-5 text-[#243A68] mt-0.5 shrink-0" />
-              <div>
-                <p className="font-mono text-xs uppercase tracking-wider text-[#08070C]/60">
-                  Community Email
-                </p>
-                {siteSettings.contactEmail ? (
+            {siteSettings.contactEmail && (
+              <div className="flex items-start gap-3.5">
+                <Mail className="w-5 h-5 text-[#243A68] mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-wider text-[#08070C]/60">
+                    Community Email
+                  </p>
                   <a
                     href={`mailto:${siteSettings.contactEmail}`}
                     className="text-base font-medium underline decoration-[#08070C]/30 underline-offset-4 hover:decoration-[#FF9900] transition-colors"
                   >
                     {siteSettings.contactEmail}
                   </a>
-                ) : (
-                  <p className="font-mono text-xs text-[#08070C]/55 mt-1">
-                    To be configured in Admin Dashboard
-                  </p>
-                )}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="flex items-start gap-3.5">
               <MapPin className="w-5 h-5 text-[#243A68] mt-0.5 shrink-0" />
@@ -142,10 +138,10 @@ export function ContactPage() {
               <UserCheck className="w-5 h-5 text-[#243A68] mt-0.5 shrink-0" />
               <div>
                 <p className="font-mono text-xs uppercase tracking-wider text-[#08070C]/60">
-                  Faculty Coordinator Contact
+                  Faculty Coordinators
                 </p>
                 {siteSettings.facultyCoordinatorContact ? (
-                  <p className="text-sm text-[#08070C]/85 mt-1">
+                  <p className="text-sm text-[#08070C]/85 mt-1 whitespace-pre-line leading-relaxed">
                     {siteSettings.facultyCoordinatorContact}
                   </p>
                 ) : (

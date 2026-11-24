@@ -180,6 +180,9 @@ export function PlatformProvider({ children }: { children: React.ReactNode }) {
             instagramUrl: remote.instagramUrl?.trim()
               ? remote.instagramUrl
               : DEFAULT_SITE_SETTINGS.instagramUrl,
+            facultyCoordinatorContact: remote.facultyCoordinatorContact?.trim()
+              ? remote.facultyCoordinatorContact
+              : DEFAULT_SITE_SETTINGS.facultyCoordinatorContact,
           });
           setSettingsLoadedFromDb(true);
         } else {

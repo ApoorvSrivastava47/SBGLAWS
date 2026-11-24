@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Lock } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { usePlatform } from '../context/PlatformContext';
 import { LogoLockup } from './LogoLockup';
 
@@ -94,20 +94,16 @@ export function Footer() {
               Connect
             </p>
             <div className="space-y-2.5 text-sm text-[#08070C]/80">
-              <p>
-                {siteSettings.contactEmail ? (
+              {siteSettings.contactEmail && (
+                <p>
                   <a
                     href={`mailto:${siteSettings.contactEmail}`}
                     className="underline decoration-[#08070C]/25 underline-offset-4 hover:decoration-[#FF9900] transition-colors"
                   >
                     {siteSettings.contactEmail}
                   </a>
-                ) : (
-                  <span className="text-[#08070C]/50 font-mono text-xs">
-                    Official email to be configured in Admin
-                  </span>
-                )}
-              </p>
+                </p>
+              )}
               <p className="text-xs text-[#08070C]/65 leading-relaxed">
                 {siteSettings.contactAddress ||
                   'United College of Engineering & Research (UCER), Prayagraj, Uttar Pradesh, India'}
@@ -158,13 +154,6 @@ export function Footer() {
             © {year} Student Builder Group – AWS at United College of Engineering &amp; Research,
             Prayagraj. Independent student-led campus community.
           </p>
-          <Link
-            to="/admin"
-            className="inline-flex items-center gap-1.5 font-mono uppercase tracking-wider text-[#243A68] hover:text-[#08070C] transition-colors whitespace-nowrap shrink-0"
-          >
-            <Lock className="w-3 h-3" />
-            <span>Admin Console</span>
-          </Link>
         </div>
       </div>
     </footer>

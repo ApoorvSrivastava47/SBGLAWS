@@ -109,19 +109,25 @@ export function TeamPage() {
 
                     const cardHeaderAndBody = (
                       <>
-                        <div className="relative bg-[#E4D5FF]/25 border-b border-[#08070C]/10">
-                          <ImageSlot
-                            src={member.photoUrl}
-                            alt={`${member.fullName} — ${member.designation}`}
-                            slotLabel="Member Photograph Slot"
-                            aspectClass="aspect-[4/5]"
-                            variant="lavender"
-                            roundedClass="rounded-none"
-                            imgClassName={member.imageClassName || 'object-[50%_18%]'}
-                            hoverZoom
-                            className="border-0"
-                          />
-                        </div>
+                        {member.photoUrl && (
+                          <div className="relative bg-[#E4D5FF]/25 border-b border-[#08070C]/10">
+                            <ImageSlot
+                              src={member.photoUrl}
+                              alt={
+                                member.designation
+                                  ? `${member.fullName} — ${member.designation}`
+                                  : member.fullName
+                              }
+                              slotLabel="Member Photograph Slot"
+                              aspectClass="aspect-[4/5]"
+                              variant="lavender"
+                              roundedClass="rounded-none"
+                              imgClassName={member.imageClassName || 'object-[50%_18%]'}
+                              hoverZoom
+                              className="border-0"
+                            />
+                          </div>
+                        )}
 
                         <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between gap-4">
                           <div className="space-y-3">
@@ -146,9 +152,11 @@ export function TeamPage() {
                               <h3 className="font-display text-xl sm:text-[1.375rem] font-bold tracking-tight text-[#08070C] leading-snug group-hover:text-[#243A68] transition-colors">
                                 {member.fullName}
                               </h3>
-                              <p className="text-sm sm:text-[15px] font-medium text-[#08070C]/75 leading-relaxed">
-                                {member.designation}
-                              </p>
+                              {member.designation && (
+                                <p className="text-sm sm:text-[15px] font-medium text-[#08070C]/75 leading-relaxed">
+                                  {member.designation}
+                                </p>
+                              )}
                             </div>
 
                             {(member.department || member.academicYear) && (
