@@ -33,10 +33,10 @@ export function RevealSection({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.08 }}
-      transition={{ duration: 0.38, delay, ease: EASE_EDITORIAL }}
+      viewport={{ once: true, amount: 'some' }}
+      transition={{ duration: 0.34, delay, ease: EASE_EDITORIAL }}
       className={className}
     >
       {children}
@@ -55,12 +55,12 @@ export function StaggerGrid({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.08 }}
+      viewport={{ once: true, amount: 'some' }}
       variants={{
         hidden: {},
         visible: {
           transition: {
-            staggerChildren: 0.055,
+            staggerChildren: 0.045,
           },
         },
       }}
@@ -81,11 +81,11 @@ export function StaggerItem({
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 12 },
+        hidden: { opacity: 0, y: 10 },
         visible: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.34, ease: EASE_EDITORIAL },
+          transition: { duration: 0.32, ease: EASE_EDITORIAL },
         },
       }}
       className={className}

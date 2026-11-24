@@ -41,14 +41,14 @@ export function TeamPage() {
 
       {/* Editorial Header */}
       <section className="border-b border-[#08070C]/10 bg-[#FAFAFC]">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-20">
-          <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-4">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-20">
+          <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-3 sm:mb-4">
             Community Directory · UCER Prayagraj
           </p>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
             <h1
               className="lg:col-span-7 font-display font-bold tracking-tight leading-[0.98]"
-              style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)' }}
+              style={{ fontSize: 'clamp(2.15rem, 5.5vw, 4.5rem)' }}
             >
               Our Team
             </h1>
@@ -62,9 +62,9 @@ export function TeamPage() {
       </section>
 
       {/* Main Directory Content */}
-      <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-20">
+      <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-20">
         {teamMembers.length === 0 ? (
-          <RevealSection className="border border-[#08070C]/15 bg-[#E4D5FF]/25 p-10 md:p-14 max-w-3xl">
+          <RevealSection className="border border-[#08070C]/15 bg-[#E4D5FF]/25 p-6 sm:p-10 md:p-14 max-w-3xl">
             <p className="font-mono text-xs uppercase tracking-wider text-[#243A68] mb-2">
               Team Directory Pending Profiles
             </p>
@@ -78,15 +78,15 @@ export function TeamPage() {
             </p>
           </RevealSection>
         ) : (
-          <div className="space-y-16">
+          <div className="space-y-12 sm:space-y-16">
             {groupedByCategory.map((group, groupIdx) => (
-              <div key={group.category} className="space-y-8">
-                <RevealSection className="flex items-baseline justify-between border-b border-[#08070C]/15 pb-3.5">
-                  <div className="flex items-baseline gap-3">
+              <div key={group.category} className="space-y-6 sm:space-y-8">
+                <RevealSection className="flex flex-wrap items-baseline justify-between gap-2 border-b border-[#08070C]/15 pb-3.5">
+                  <div className="flex items-baseline gap-2.5 sm:gap-3">
                     <span className="font-mono text-xs text-[#243A68] tabular-nums">
                       {String(groupIdx + 1).padStart(2, '0')}
                     </span>
-                    <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight">
+                    <h2 className="font-display text-xl sm:text-3xl font-bold tracking-tight">
                       {group.category}
                     </h2>
                   </div>
@@ -96,7 +96,7 @@ export function TeamPage() {
                   </span>
                 </RevealSection>
 
-                <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8">
+                <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7 lg:gap-8">
                   {group.members.map((member, memberIdx) => {
                     const hasExtraDetails = Boolean(
                       member.bio ||
@@ -129,7 +129,7 @@ export function TeamPage() {
                           </div>
                         )}
 
-                        <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between gap-4">
+                        <div className="p-5 sm:p-7 flex-1 flex flex-col justify-between gap-4">
                           <div className="space-y-3">
                             <div className="flex items-center justify-between gap-3">
                               <div className="flex items-center gap-2.5">
@@ -190,11 +190,11 @@ export function TeamPage() {
                           )}
 
                           {hasExtraDetails && (
-                            <div className="px-6 sm:px-7 py-3.5 border-t border-[#08070C]/10 flex items-center justify-between text-xs font-mono bg-[#FAFAFC]/60">
+                            <div className="px-5 sm:px-7 py-2.5 sm:py-3.5 border-t border-[#08070C]/10 flex items-center justify-between text-xs font-mono bg-[#FAFAFC]/60">
                               <button
                                 type="button"
                                 onClick={() => setActiveMember(member)}
-                                className="uppercase tracking-wider text-[#243A68] hover:text-[#08070C] transition-colors cursor-pointer"
+                                className="py-2 sm:py-0 uppercase tracking-wider text-[#243A68] hover:text-[#08070C] transition-colors cursor-pointer"
                               >
                                 Profile Details
                               </button>
@@ -204,7 +204,7 @@ export function TeamPage() {
                                     href={member.linkedinUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-[#08070C]/65 hover:text-[#08070C] transition-colors"
+                                    className="py-2 px-1 sm:p-0 text-[#08070C]/65 hover:text-[#08070C] transition-colors"
                                   >
                                     IN
                                   </a>
@@ -214,7 +214,7 @@ export function TeamPage() {
                                     href={member.githubUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-[#08070C]/65 hover:text-[#08070C] transition-colors"
+                                    className="py-2 px-1 sm:p-0 text-[#08070C]/65 hover:text-[#08070C] transition-colors"
                                   >
                                     GH
                                   </a>
@@ -241,7 +241,7 @@ export function TeamPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-0 z-50 bg-[#08070C]/55 backdrop-blur-[2px] flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-[#08070C]/55 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-4"
             role="dialog"
             aria-modal="true"
             aria-label={activeMember.fullName}
@@ -263,10 +263,11 @@ export function TeamPage() {
                   aspectClass="aspect-[3/4]"
                   variant="lavender"
                   roundedClass="rounded-none"
+                  imgClassName={activeMember.imageClassName || 'object-[50%_18%]'}
                   className="h-full"
                 />
               </div>
-              <div className="sm:col-span-7 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+              <div className="sm:col-span-7 p-5 sm:p-8 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -283,7 +284,7 @@ export function TeamPage() {
                     <button
                       type="button"
                       onClick={() => setActiveMember(null)}
-                      className="w-9 h-9 inline-flex items-center justify-center border border-[#08070C]/15 hover:border-[#08070C] transition-colors cursor-pointer shrink-0"
+                      className="w-10 h-10 sm:w-9 sm:h-9 inline-flex items-center justify-center border border-[#08070C]/15 hover:border-[#08070C] transition-colors cursor-pointer shrink-0"
                       aria-label="Close member details"
                     >
                       <X className="w-4 h-4" />

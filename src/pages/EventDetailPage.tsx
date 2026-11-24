@@ -115,9 +115,9 @@ export function EventDetailPage() {
 
       {/* Hero Split */}
       <section className="border-b border-[#08070C]/10">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-12 md:py-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-7 space-y-6">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-wider text-[#243A68]">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-8 sm:py-12 md:py-16 grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-10 items-start">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+            <div className="flex flex-wrap items-center gap-x-2.5 sm:gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-wider text-[#243A68]">
               <span>{event.category}</span>
               <span aria-hidden="true">·</span>
               <span>{computedStatus}</span>
@@ -132,8 +132,8 @@ export function EventDetailPage() {
 
             <div className="space-y-3">
               <h1
-                className="font-display font-bold tracking-tight leading-[1.02] text-balance"
-                style={{ fontSize: 'clamp(2.25rem, 4.5vw, 3.75rem)' }}
+                className="font-display font-bold tracking-tight leading-[1.06] sm:leading-[1.02] text-balance"
+                style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.75rem)' }}
               >
                 {event.title}
               </h1>
@@ -246,8 +246,8 @@ export function EventDetailPage() {
 
             {/* Registration CTA */}
             {isQrRegistration ? (
-              <div className="pt-4">
-                <div className="border border-[#08070C]/15 bg-[#E4D5FF]/35 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="pt-2 sm:pt-4">
+                <div className="border border-[#08070C]/15 bg-[#E4D5FF]/35 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="flex items-start gap-3">
                     <QrCode className="w-5 h-5 text-[#243A68] shrink-0 mt-0.5" />
                     <div>
@@ -263,7 +263,7 @@ export function EventDetailPage() {
                     <button
                       type="button"
                       onClick={() => setPosterZoomOpen(true)}
-                      className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#08070C] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#243A68] active:scale-[0.98] transition-all whitespace-nowrap shrink-0 cursor-pointer"
+                      className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#08070C] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#243A68] active:scale-[0.98] transition-all whitespace-nowrap shrink-0 cursor-pointer"
                     >
                       <Maximize2 className="w-3.5 h-3.5 text-[#FF9900]" />
                       <span>Enlarge Poster QR</span>
@@ -272,11 +272,11 @@ export function EventDetailPage() {
                 </div>
               </div>
             ) : (
-              <div className="pt-4 flex flex-wrap items-center gap-4">
+              <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-4">
                 {canRegister ? (
                   <Link
                     to={`/register/${event.id}`}
-                    className="group inline-flex items-center gap-2 px-7 py-3.5 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] transition-all"
+                    className="group w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] transition-all"
                   >
                     <span>Register Now</span>
                     <ArrowUpRight className="w-4 h-4 text-[#FF9900] transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -300,7 +300,7 @@ export function EventDetailPage() {
             )}
           </div>
 
-          <div id="poster-qr" className="lg:col-span-5 space-y-3">
+          <div id="poster-qr" className="lg:col-span-5 max-w-md mx-auto lg:max-w-none w-full space-y-3">
             <div className="bg-white border border-[#08070C]/15 rounded-2xl overflow-hidden shadow-xs">
               <ImageSlot
                 src={event.posterUrl}
@@ -322,7 +322,7 @@ export function EventDetailPage() {
                 <button
                   type="button"
                   onClick={() => setPosterZoomOpen(true)}
-                  className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-[#243A68] hover:text-[#08070C] cursor-pointer"
+                  className="inline-flex items-center gap-1.5 py-1.5 px-2 -mr-2 font-mono text-[11px] uppercase tracking-wider text-[#243A68] hover:text-[#08070C] cursor-pointer whitespace-nowrap shrink-0"
                 >
                   <Maximize2 className="w-3 h-3" />
                   <span>Full View</span>
@@ -334,8 +334,8 @@ export function EventDetailPage() {
       </section>
 
       {/* Main Content & Details */}
-      <RevealSection className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12">
-        <div className="lg:col-span-8 space-y-12">
+      <RevealSection className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12">
+        <div className="lg:col-span-8 space-y-8 sm:space-y-12">
           <div className="space-y-4">
             <p className="font-mono text-xs uppercase tracking-widest text-[#243A68]">
               About This Event
@@ -465,31 +465,31 @@ export function EventDetailPage() {
           aria-modal="true"
           aria-label={`${event.title} full resolution poster`}
           onClick={() => setPosterZoomOpen(false)}
-          className="fixed inset-0 z-50 bg-[#08070C]/75 backdrop-blur-xs flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-[#08070C]/75 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4"
         >
           <div
             onClick={(e) => e.stopPropagation()}
             className="relative bg-white border border-[#08070C]/20 max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl"
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#08070C]/10">
-              <p className="font-mono text-xs uppercase tracking-wider text-[#243A68]">
+            <div className="flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 border-b border-[#08070C]/10">
+              <p className="font-mono text-[11px] sm:text-xs uppercase tracking-wider text-[#243A68] truncate">
                 Official Poster · Scan QR Code to Register
               </p>
               <button
                 type="button"
                 onClick={() => setPosterZoomOpen(false)}
                 aria-label="Close full poster view"
-                className="w-8 h-8 inline-flex items-center justify-center border border-[#08070C]/15 hover:border-[#08070C] cursor-pointer"
+                className="w-10 h-10 sm:w-8 sm:h-8 inline-flex items-center justify-center border border-[#08070C]/15 hover:border-[#08070C] cursor-pointer shrink-0"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="p-3 sm:p-5 overflow-auto flex items-center justify-center bg-white">
+            <div className="p-2 sm:p-5 overflow-auto flex items-center justify-center bg-white">
               <img
                 src={event.posterUrl}
                 alt={`${event.title} full poster`}
                 referrerPolicy="no-referrer"
-                className="max-h-[78vh] w-auto object-contain"
+                className="max-h-[80vh] w-full max-w-full object-contain"
               />
             </div>
           </div>

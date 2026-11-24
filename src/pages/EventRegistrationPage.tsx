@@ -282,22 +282,22 @@ export function EventRegistrationPage() {
           description="Select an open AWS Student Builder Group – UCER event to complete your registration."
         />
         <section className="border-b border-[#08070C]/10 bg-[#FAFAFC]">
-          <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-20">
+          <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-20">
             <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-3">
               Event Registration Portal
             </p>
             <h1
-              className="font-display font-bold tracking-tight"
-              style={{ fontSize: 'clamp(2.25rem, 5vw, 4rem)' }}
+              className="font-display font-bold tracking-tight leading-[1.02]"
+              style={{ fontSize: 'clamp(1.85rem, 5vw, 4rem)' }}
             >
               Join an Upcoming Event
             </h1>
           </div>
         </section>
 
-        <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-20">
+        <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-20">
           {openEvents.length === 0 ? (
-            <div className="border border-[#08070C]/15 bg-[#E4D5FF]/30 p-10 max-w-2xl space-y-4">
+            <div className="border border-[#08070C]/15 bg-[#E4D5FF]/30 p-6 sm:p-10 max-w-2xl space-y-4">
               <p className="font-mono text-xs uppercase tracking-wider text-[#243A68]">
                 No Open Registrations Currently
               </p>
@@ -348,7 +348,7 @@ export function EventRegistrationPage() {
                             : ''
                         }
                       />
-                      <div className="p-6 space-y-2">
+                      <div className="p-5 sm:p-6 space-y-2">
                         <p className="font-mono text-[11px] uppercase tracking-wider text-[#243A68]">
                           {ev.category} · {ev.dateDisplayOverride || formatDisplayDate(ev.startDate)}
                         </p>
@@ -356,10 +356,10 @@ export function EventRegistrationPage() {
                         <p className="text-sm text-[#08070C]/75 line-clamp-2">{ev.shortDescription}</p>
                       </div>
                     </div>
-                    <div className="px-6 py-4 border-t border-[#08070C]/10">
+                    <div className="px-5 sm:px-6 py-4 border-t border-[#08070C]/10">
                       <Link
                         to={isQrRegistration ? `/events/${ev.id}#poster-qr` : `/register/${ev.id}`}
-                        className="w-full inline-flex justify-center py-2.5 bg-[#08070C] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#243A68] active:scale-[0.98] transition-all"
+                        className="w-full min-h-[44px] inline-flex items-center justify-center py-2.5 bg-[#08070C] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#243A68] active:scale-[0.98] transition-all"
                       >
                         {isQrRegistration ? 'View Poster & Scan QR' : 'Open Registration Form'}
                       </Link>
@@ -411,7 +411,7 @@ export function EventRegistrationPage() {
       />
 
       <div className="border-b border-[#08070C]/10 bg-[#FAFAFC]">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-4 flex items-center justify-between">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-3.5 sm:py-4 flex flex-wrap items-center justify-between gap-2">
           <Link
             to={`/events/${selectedEvent.id}`}
             className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[#243A68] hover:text-[#08070C]"
@@ -427,9 +427,9 @@ export function EventRegistrationPage() {
         </div>
       </div>
 
-      <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-12 md:py-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-8 sm:py-12 md:py-16 grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-10 items-start">
         {/* Selected Event Summary Sidebar */}
-        <aside className="lg:col-span-4 border border-[#08070C]/15 bg-[#DCE4F5]/30 p-6 space-y-5 lg:sticky lg:top-24">
+        <aside className="lg:col-span-4 border border-[#08070C]/15 bg-[#DCE4F5]/30 p-5 sm:p-6 space-y-4 sm:space-y-5 lg:sticky lg:top-24">
           <ImageSlot
             src={selectedEvent.posterUrl}
             alt={selectedEvent.title}
@@ -443,7 +443,7 @@ export function EventRegistrationPage() {
             <p className="font-mono text-[11px] uppercase tracking-wider text-[#243A68]">
               Selected Event
             </p>
-            <h2 className="font-display text-2xl font-bold tracking-tight">
+            <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight">
               {selectedEvent.title}
             </h2>
             <p className="text-sm text-[#08070C]/75 leading-relaxed">
@@ -465,21 +465,21 @@ export function EventRegistrationPage() {
         {/* Registration Form or Confirmation Ticket */}
         <div className="lg:col-span-8">
           {confirmedTicket ? (
-            <RevealSection className="border-2 border-[#08070C] bg-[#E4D5FF]/30 p-8 sm:p-10 space-y-6">
-              <div className="flex items-start justify-between gap-4">
+            <RevealSection className="border-2 border-[#08070C] bg-[#E4D5FF]/30 p-5 sm:p-10 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                 <div className="space-y-2">
                   <div className="inline-flex items-center gap-2 text-[#243A68] font-mono text-xs uppercase tracking-wider font-semibold">
                     <CheckCircle2 className="w-4 h-4 text-[#08070C]" />
                     <span>Registration Confirmed</span>
                   </div>
-                  <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">
+                  <h1 className="font-display text-2xl sm:text-4xl font-bold tracking-tight">
                     You are registered.
                   </h1>
                 </div>
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 border border-[#08070C]/25 bg-white text-xs font-mono uppercase tracking-wider hover:border-[#08070C] cursor-pointer"
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 sm:py-2 border border-[#08070C]/25 bg-white text-xs font-mono uppercase tracking-wider hover:border-[#08070C] cursor-pointer self-start"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   <span>Print Pass</span>
@@ -535,11 +535,11 @@ export function EventRegistrationPage() {
               </div>
             </RevealSection>
           ) : selectedEvent.registrationCtaType === 'qr_poster' ? (
-            <div className="border border-[#08070C]/15 bg-[#E4D5FF]/30 p-8 sm:p-10 space-y-4">
+            <div className="border border-[#08070C]/15 bg-[#E4D5FF]/30 p-5 sm:p-10 space-y-4">
               <p className="font-mono text-xs uppercase tracking-wider text-[#243A68]">
                 Registration via Official Poster
               </p>
-              <h1 className="font-display text-3xl font-bold tracking-tight">
+              <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight">
                 {selectedEvent.registrationNote || 'Register Now — Scan the QR code on the poster.'}
               </h1>
               <p className="text-sm text-[#08070C]/75 leading-relaxed">
@@ -548,17 +548,17 @@ export function EventRegistrationPage() {
               </p>
               <Link
                 to={`/events/${selectedEvent.id}#poster-qr`}
-                className="inline-block px-5 py-2.5 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] transition-colors"
+                className="inline-flex items-center justify-center w-full sm:w-auto px-5 py-3 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] transition-colors"
               >
                 Open Full Event Details &amp; Poster
               </Link>
             </div>
           ) : isClosed ? (
-            <div className="border border-[#08070C]/15 bg-[#F7F7FA] p-8 sm:p-10 space-y-4">
+            <div className="border border-[#08070C]/15 bg-[#F7F7FA] p-5 sm:p-10 space-y-4">
               <p className="font-mono text-xs uppercase tracking-wider text-[#243A68]">
                 Registrations Unavailable
               </p>
-              <h1 className="font-display text-3xl font-bold tracking-tight">
+              <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight">
                 Registrations for this event are closed.
               </h1>
               <p className="text-sm text-[#08070C]/75">
@@ -568,7 +568,7 @@ export function EventRegistrationPage() {
               </p>
               <Link
                 to="/events"
-                className="inline-block px-5 py-2.5 bg-[#08070C] text-white text-sm font-medium"
+                className="inline-flex items-center justify-center w-full sm:w-auto px-5 py-3 bg-[#08070C] text-white text-sm font-medium"
               >
                 Explore Open Events
               </Link>
@@ -576,14 +576,14 @@ export function EventRegistrationPage() {
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="border border-[#08070C]/15 p-6 sm:p-10 space-y-6 bg-white"
+              className="border border-[#08070C]/15 p-5 sm:p-10 space-y-6 bg-white"
               noValidate
             >
-              <div className="border-b border-[#08070C]/10 pb-5">
+              <div className="border-b border-[#08070C]/10 pb-4 sm:pb-5">
                 <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-2">
                   Registration Form
                 </p>
-                <h1 className="font-display text-3xl font-bold tracking-tight">
+                <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight">
                   Participant Details
                 </h1>
               </div>
@@ -604,13 +604,13 @@ export function EventRegistrationPage() {
                   <label className="block font-mono text-xs uppercase tracking-wider text-[#08070C]/75">
                     Participation Type *
                   </label>
-                  <div className="inline-flex border border-[#08070C]/20 p-1 bg-[#F4F4F8]">
+                  <div className="flex sm:inline-flex w-full sm:w-auto border border-[#08070C]/20 p-1 bg-[#F4F4F8]">
                     {(['individual', 'team'] as const).map((mode) => (
                       <button
                         key={mode}
                         type="button"
                         onClick={() => setRegistrationType(mode)}
-                        className={`px-4 py-2 text-xs font-mono uppercase tracking-wider cursor-pointer transition-colors ${
+                        className={`flex-1 sm:flex-initial min-h-[40px] px-4 py-2 text-xs font-mono uppercase tracking-wider cursor-pointer transition-colors ${
                           registrationType === mode
                             ? 'bg-[#08070C] text-white'
                             : 'text-[#08070C]/70'
@@ -623,7 +623,7 @@ export function EventRegistrationPage() {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-[#08070C]/75 mb-1.5">
                     Full Name *
@@ -635,7 +635,7 @@ export function EventRegistrationPage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Your full name"
-                    className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                   />
                 </div>
 
@@ -650,7 +650,7 @@ export function EventRegistrationPage() {
                     value={collegeEmail}
                     onChange={(e) => setCollegeEmail(e.target.value)}
                     placeholder="name@college.edu"
-                    className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                   />
                 </div>
 
@@ -665,7 +665,7 @@ export function EventRegistrationPage() {
                     value={contactNumber}
                     onChange={(e) => setContactNumber(e.target.value)}
                     placeholder="+91 98XXXXXXXX"
-                    className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                   />
                 </div>
 
@@ -680,7 +680,7 @@ export function EventRegistrationPage() {
                     value={collegeName}
                     readOnly={selectedEvent.eligibilityScope === 'ucer_only'}
                     onChange={(e) => setCollegeName(e.target.value)}
-                    className={`w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none ${
+                    className={`w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none ${
                       selectedEvent.eligibilityScope === 'ucer_only' ? 'bg-[#F4F4F8]' : 'bg-white'
                     }`}
                   />
@@ -697,7 +697,7 @@ export function EventRegistrationPage() {
                     value={department}
                     onChange={(e) => setDepartment(e.target.value)}
                     placeholder="e.g. CSE, IT, ECE, AIML"
-                    className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                   />
                 </div>
 
@@ -708,7 +708,7 @@ export function EventRegistrationPage() {
                   <select
                     value={academicYear}
                     onChange={(e) => setAcademicYear(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none bg-white"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none bg-white"
                   >
                     <option value="1st Year">1st Year</option>
                     <option value="2nd Year">2nd Year</option>
@@ -729,7 +729,7 @@ export function EventRegistrationPage() {
                     value={studentId}
                     onChange={(e) => setStudentId(e.target.value)}
                     placeholder="University Roll No. or College ID"
-                    className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                   />
                 </div>
               </div>
@@ -737,7 +737,7 @@ export function EventRegistrationPage() {
               {/* Team Details Section */}
               {registrationType === 'team' && (
                 <div className="pt-5 border-t border-[#08070C]/10 space-y-5">
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
                       <h3 className="font-display text-lg font-bold">Team Information</h3>
                       <p className="text-xs text-[#08070C]/65">
@@ -751,7 +751,7 @@ export function EventRegistrationPage() {
                       disabled={
                         teamMembers.length >= Math.max(0, (selectedEvent.maxTeamSize || 4) - 1)
                       }
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-[#08070C]/25 text-xs font-mono uppercase tracking-wider hover:border-[#08070C] disabled:opacity-40 cursor-pointer"
+                      className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 sm:py-2 border border-[#08070C]/25 text-xs font-mono uppercase tracking-wider hover:border-[#08070C] disabled:opacity-40 cursor-pointer self-start sm:self-auto"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Add Member</span>
@@ -769,7 +769,7 @@ export function EventRegistrationPage() {
                       value={teamName}
                       onChange={(e) => setTeamName(e.target.value)}
                       placeholder="Enter your team name"
-                      className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                      className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                     />
                   </div>
 
@@ -785,7 +785,7 @@ export function EventRegistrationPage() {
                         <button
                           type="button"
                           onClick={() => removeTeamMember(idx)}
-                          className="text-red-700 hover:text-red-900 p-1 cursor-pointer"
+                          className="text-red-700 hover:text-red-900 p-2 -mr-1 cursor-pointer"
                           aria-label={`Remove team member ${idx + 2}`}
                         >
                           <Trash2 className="w-4 h-4" />
@@ -797,26 +797,26 @@ export function EventRegistrationPage() {
                           placeholder="Full Name *"
                           value={member.name}
                           onChange={(e) => updateTeamMember(idx, 'name', e.target.value)}
-                          className="px-3 py-2 text-sm border border-[#08070C]/20 bg-white"
+                          className="px-3 py-2 text-base sm:text-sm border border-[#08070C]/20 bg-white"
                         />
                         <input
                           type="email"
                           placeholder="College Email *"
                           value={member.email}
                           onChange={(e) => updateTeamMember(idx, 'email', e.target.value)}
-                          className="px-3 py-2 text-sm border border-[#08070C]/20 bg-white"
+                          className="px-3 py-2 text-base sm:text-sm border border-[#08070C]/20 bg-white"
                         />
                         <input
                           type="text"
                           placeholder="Department"
                           value={member.department}
                           onChange={(e) => updateTeamMember(idx, 'department', e.target.value)}
-                          className="px-3 py-2 text-sm border border-[#08070C]/20 bg-white"
+                          className="px-3 py-2 text-base sm:text-sm border border-[#08070C]/20 bg-white"
                         />
                         <select
                           value={member.academicYear}
                           onChange={(e) => updateTeamMember(idx, 'academicYear', e.target.value)}
-                          className="px-3 py-2 text-sm border border-[#08070C]/20 bg-white"
+                          className="px-3 py-2 text-base sm:text-sm border border-[#08070C]/20 bg-white"
                         >
                           <option value="1st Year">1st Year</option>
                           <option value="2nd Year">2nd Year</option>
@@ -847,7 +847,7 @@ export function EventRegistrationPage() {
                           onChange={(e) =>
                             setCustomAnswers((prev) => ({ ...prev, [q.id]: e.target.value }))
                           }
-                          className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                          className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                         />
                       ) : q.type === 'select' ? (
                         <select
@@ -856,7 +856,7 @@ export function EventRegistrationPage() {
                           onChange={(e) =>
                             setCustomAnswers((prev) => ({ ...prev, [q.id]: e.target.value }))
                           }
-                          className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 bg-white focus:border-[#08070C] focus:outline-none"
+                          className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 bg-white focus:border-[#08070C] focus:outline-none"
                         >
                           <option value="">Select an option</option>
                           {(q.options || []).map((opt) => (
@@ -874,7 +874,7 @@ export function EventRegistrationPage() {
                           onChange={(e) =>
                             setCustomAnswers((prev) => ({ ...prev, [q.id]: e.target.value }))
                           }
-                          className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                          className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                         />
                       )}
                     </div>
@@ -901,7 +901,7 @@ export function EventRegistrationPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full sm:w-auto px-8 py-3.5 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] disabled:opacity-50 transition-all cursor-pointer"
+                className="w-full sm:w-auto min-h-[44px] px-8 py-3.5 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] disabled:opacity-50 transition-all cursor-pointer"
               >
                 {submitting ? 'Submitting Registration...' : 'Confirm Registration'}
               </button>

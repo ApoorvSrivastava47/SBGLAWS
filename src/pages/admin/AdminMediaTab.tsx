@@ -135,7 +135,7 @@ export function AdminMediaTab({ mediaAssets }: AdminMediaTabProps) {
       {/* Upload Form */}
       <form
         onSubmit={handleUpload}
-        className="border border-[#08070C]/15 bg-white p-6 space-y-4"
+        className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-4"
       >
         {errorMsg && (
           <div className="p-3 bg-red-50 border border-red-200 text-red-900 text-sm">

@@ -171,7 +171,7 @@ export function AdminTeamTab({ allMembers, mediaAssets }: AdminTeamTabProps) {
         </div>
       ) : (
         <div className="border border-[#08070C]/15 bg-white overflow-x-auto">
-          <table className="w-full text-left border-collapse text-sm">
+          <table className="w-full min-w-[640px] text-left border-collapse text-sm">
             <thead>
               <tr className="border-b border-[#08070C]/15 bg-[#FAFAFC] font-mono text-[11px] uppercase tracking-wider text-[#08070C]/65">
                 <th className="py-3 px-4">Order</th>
@@ -222,8 +222,8 @@ export function AdminTeamTab({ allMembers, mediaAssets }: AdminTeamTabProps) {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#08070C]/55 flex items-center justify-center p-4">
-          <div className="bg-white border border-[#08070C]/20 w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-5">
+        <div className="fixed inset-0 z-50 bg-[#08070C]/55 flex items-center justify-center p-2 sm:p-4">
+          <div className="bg-white border border-[#08070C]/20 w-full max-w-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-8 space-y-5">
             <div className="flex items-center justify-between border-b border-[#08070C]/10 pb-4">
               <h3 className="font-display text-2xl font-bold">
                 {editingId ? 'Edit Member' : 'Add Team Member'}

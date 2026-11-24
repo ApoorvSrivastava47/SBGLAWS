@@ -315,26 +315,31 @@ export function AdminDashboardPage() {
         description="Administrator management console for AWS Student Builder Group – UCER."
       />
 
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-6 sm:py-8 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
         {/* Sidebar */}
-        <aside className="lg:col-span-3 space-y-4">
-          <div className="bg-white border border-[#08070C]/15 p-5 space-y-3">
-            <p className="font-mono text-[11px] uppercase tracking-wider text-[#243A68]">
-              Signed In · {adminRole?.replace('_', ' ')}
-            </p>
-            <p className="text-sm font-semibold truncate">{user.displayName || user.email}</p>
-            <p className="font-mono text-xs text-[#08070C]/60 truncate">{user.email}</p>
+        <aside className="lg:col-span-3 space-y-4 min-w-0">
+          <div className="bg-white border border-[#08070C]/15 p-4 sm:p-5 flex flex-row lg:flex-col items-center lg:items-stretch justify-between gap-3">
+            <div className="min-w-0 space-y-1">
+              <p className="font-mono text-[11px] uppercase tracking-wider text-[#243A68] truncate">
+                Signed In · {adminRole?.replace('_', ' ')}
+              </p>
+              <p className="text-sm font-semibold truncate">{user.displayName || user.email}</p>
+              <p className="font-mono text-xs text-[#08070C]/60 truncate">{user.email}</p>
+            </div>
             <button
               type="button"
               onClick={() => signOut()}
-              className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-red-700 hover:text-red-900 pt-2 cursor-pointer"
+              className="inline-flex items-center gap-1.5 py-2 lg:py-0 lg:pt-2 text-xs font-mono uppercase tracking-wider text-red-700 hover:text-red-900 shrink-0 cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Sign Out</span>
             </button>
           </div>
 
-          <nav className="bg-white border border-[#08070C]/15 p-2 space-y-1">
+          <nav
+            className="bg-white border border-[#08070C]/15 p-1.5 lg:p-2 flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible"
+            aria-label="Admin sections"
+          >
             {navItems
               .filter((item) => item.visible)
               .map((item) => {
@@ -344,7 +349,7 @@ export function AdminDashboardPage() {
                     key={item.id}
                     type="button"
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-medium text-left transition-colors cursor-pointer ${
+                    className={`lg:w-full flex items-center gap-2.5 lg:gap-3 px-3.5 py-2.5 text-xs sm:text-sm font-medium text-left whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
                       activeTab === item.id
                         ? 'bg-[#E4D5FF] text-[#08070C]'
                         : 'text-[#08070C]/75 hover:bg-[#FAFAFC] hover:text-[#08070C]'
@@ -361,9 +366,9 @@ export function AdminDashboardPage() {
         {/* Main Workspace */}
         <main className="lg:col-span-9 min-w-0">
           {activeTab === 'overview' && (
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               <div>
-                <h1 className="font-display text-3xl font-bold tracking-tight">
+                <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight">
                   Dashboard Overview
                 </h1>
                 <p className="text-sm text-[#08070C]/65">
@@ -371,44 +376,44 @@ export function AdminDashboardPage() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white border border-[#08070C]/15 p-5">
+              <div className="grid grid-cols-1 min-[360px]:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <div className="bg-white border border-[#08070C]/15 p-4 sm:p-5">
                   <p className="font-mono text-[11px] uppercase tracking-wider text-[#08070C]/60">
                     Team Profiles
                   </p>
-                  <p className="font-display text-3xl font-bold tabular-nums mt-2">
+                  <p className="font-display text-2xl sm:text-3xl font-bold tabular-nums mt-2">
                     {allMembers.length}
                   </p>
                 </div>
-                <div className="bg-white border border-[#08070C]/15 p-5">
+                <div className="bg-white border border-[#08070C]/15 p-4 sm:p-5">
                   <p className="font-mono text-[11px] uppercase tracking-wider text-[#08070C]/60">
                     Total Events
                   </p>
-                  <p className="font-display text-3xl font-bold tabular-nums mt-2">
+                  <p className="font-display text-2xl sm:text-3xl font-bold tabular-nums mt-2">
                     {allEvents.length}
                   </p>
                 </div>
-                <div className="bg-white border border-[#08070C]/15 p-5">
+                <div className="bg-white border border-[#08070C]/15 p-4 sm:p-5">
                   <p className="font-mono text-[11px] uppercase tracking-wider text-[#08070C]/60">
                     Upcoming Events
                   </p>
-                  <p className="font-display text-3xl font-bold tabular-nums mt-2">
+                  <p className="font-display text-2xl sm:text-3xl font-bold tabular-nums mt-2">
                     {upcomingCount}
                   </p>
                 </div>
-                <div className="bg-white border border-[#08070C]/15 p-5">
+                <div className="bg-white border border-[#08070C]/15 p-4 sm:p-5">
                   <p className="font-mono text-[11px] uppercase tracking-wider text-[#08070C]/60">
                     Registrations
                   </p>
-                  <p className="font-display text-3xl font-bold tabular-nums mt-2">
+                  <p className="font-display text-2xl sm:text-3xl font-bold tabular-nums mt-2">
                     {canManageEvents ? registrations.length : '—'}
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
                 {/* Recent Registrations */}
-                <div className="bg-white border border-[#08070C]/15 p-6 space-y-4">
+                <div className="bg-white border border-[#08070C]/15 p-5 sm:p-6 space-y-4">
                   <h2 className="font-display text-lg font-bold">Recent Registrations</h2>
                   {!canManageEvents ? (
                     <p className="text-xs text-[#08070C]/60">
@@ -436,7 +441,7 @@ export function AdminDashboardPage() {
                 </div>
 
                 {/* Recent Website Updates */}
-                <div className="bg-white border border-[#08070C]/15 p-6 space-y-4">
+                <div className="bg-white border border-[#08070C]/15 p-5 sm:p-6 space-y-4">
                   <h2 className="font-display text-lg font-bold">Recent Website Updates</h2>
                   {activityLogs.length === 0 ? (
                     <p className="text-sm text-[#08070C]/60">No administrative actions logged yet.</p>

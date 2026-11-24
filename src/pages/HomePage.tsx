@@ -138,56 +138,56 @@ export function HomePage() {
 
       {/* 3.1 Hero Section */}
       <section className="relative overflow-hidden border-b border-[#08070C]/10">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 md:py-14 lg:py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-7 sm:py-10 md:py-14 lg:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-10 lg:gap-12 items-stretch">
             {/* Editorial Left Column */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.36, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-7 flex flex-col justify-between gap-8 lg:gap-10 py-1 lg:py-2"
+              transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7 flex flex-col justify-between gap-6 sm:gap-8 lg:gap-10 py-0 lg:py-2"
             >
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <span className="font-display text-xl sm:text-[22px] font-bold tracking-tight text-[#08070C]">
+              <div className="flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1.5">
+                <span className="font-display text-lg sm:text-[22px] font-bold tracking-tight text-[#08070C]">
                   Student Builder Group
                 </span>
-                <span className="font-mono text-xs uppercase tracking-widest text-[#243A68] border-l border-[#08070C]/20 pl-4">
+                <span className="font-mono text-[11px] sm:text-xs uppercase tracking-widest text-[#243A68] border-l border-[#08070C]/20 pl-3 sm:pl-4">
                   UCER · Prayagraj
                 </span>
               </div>
 
-              <div className="space-y-7 lg:space-y-8 my-auto">
-                <div className="space-y-5">
+              <div className="space-y-5 sm:space-y-7 lg:space-y-8 my-auto">
+                <div className="space-y-3.5 sm:space-y-5">
                   <h1
-                    className="font-display font-bold tracking-[-0.035em] leading-[0.9] text-[#08070C] max-w-[11ch]"
-                    style={{ fontSize: 'clamp(3.35rem, 7.4vw, 6.9rem)' }}
+                    className="font-display font-bold tracking-[-0.035em] leading-[0.92] sm:leading-[0.9] text-[#08070C] max-w-[11ch]"
+                    style={{ fontSize: 'clamp(2.5rem, 7.4vw, 6.9rem)' }}
                   >
                     {siteSettings.heroHeadline}
                   </h1>
-                  <div className="flex items-center gap-4 pt-1">
-                    <span className="w-12 h-1.5 bg-[#FF9900] shrink-0" aria-hidden="true" />
-                    <p className="font-editorial italic text-3xl sm:text-4xl lg:text-[2.65rem] text-[#243A68] tracking-tight leading-tight">
+                  <div className="flex items-center gap-3 sm:gap-4 pt-1">
+                    <span className="w-8 sm:w-12 h-1 sm:h-1.5 bg-[#FF9900] shrink-0" aria-hidden="true" />
+                    <p className="font-editorial italic text-2xl sm:text-4xl lg:text-[2.65rem] text-[#243A68] tracking-tight leading-tight">
                       {siteSettings.heroSubheadline}
                     </p>
                   </div>
                 </div>
 
-                <p className="text-lg sm:text-xl lg:text-[1.375rem] text-[#08070C]/80 leading-[1.6] max-w-[46ch]">
+                <p className="text-base sm:text-xl lg:text-[1.375rem] text-[#08070C]/80 leading-[1.6] max-w-[46ch]">
                   {siteSettings.heroDescription}
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-[#08070C]/12 flex flex-wrap items-center gap-4">
+              <div className="pt-5 sm:pt-6 border-t border-[#08070C]/12 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
                 <Link
                   to="/about"
-                  className="group inline-flex items-center gap-2.5 px-7 py-4 bg-[#08070C] text-white text-sm sm:text-base font-medium hover:bg-[#243A68] active:scale-[0.98] transition-all duration-150 whitespace-nowrap shrink-0"
+                  className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 sm:py-4 bg-[#08070C] text-white text-sm sm:text-base font-medium hover:bg-[#243A68] active:scale-[0.98] transition-all duration-150 whitespace-nowrap shrink-0"
                 >
                   <span>Explore Our Community</span>
                   <ArrowRight className="w-4 h-4 text-[#FF9900] transition-transform duration-150 group-hover:translate-x-1" />
                 </Link>
                 <Link
                   to="/events"
-                  className="inline-flex items-center gap-2.5 px-7 py-4 border border-[#08070C]/25 text-[#08070C] text-sm sm:text-base font-medium hover:border-[#08070C] hover:bg-[#E4D5FF]/35 active:scale-[0.98] transition-all duration-150 whitespace-nowrap shrink-0"
+                  className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 sm:py-4 border border-[#08070C]/25 text-[#08070C] text-sm sm:text-base font-medium hover:border-[#08070C] hover:bg-[#E4D5FF]/35 active:scale-[0.98] transition-all duration-150 whitespace-nowrap shrink-0"
                 >
                   <span>Discover Events</span>
                 </Link>
@@ -196,14 +196,14 @@ export function HomePage() {
 
             {/* Editorial Overlapping Visual Right Column */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.42, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-5 relative max-w-lg mx-auto w-full lg:max-w-[465px] lg:ml-auto flex flex-col justify-between"
+              transition={{ duration: 0.38, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5 relative max-w-[360px] sm:max-w-lg mx-auto w-full lg:max-w-[465px] lg:ml-auto flex flex-col justify-between pt-2 sm:pt-0"
             >
               {/* Signature Lavender Geometric Panel */}
               <div
-                className="absolute -top-5 -right-3 sm:-right-6 w-[88%] h-[88%] bg-[#E4D5FF] rounded-3xl pointer-events-none"
+                className="absolute -top-2 right-0 sm:-top-5 sm:-right-6 w-[88%] h-[88%] bg-[#E4D5FF] rounded-2xl sm:rounded-3xl pointer-events-none"
                 aria-hidden="true"
               />
               {/* Orange Accent Bar */}
@@ -212,7 +212,7 @@ export function HomePage() {
                 aria-hidden="true"
               />
 
-              <div className="relative z-10 space-y-4">
+              <div className="relative z-10 space-y-3 sm:space-y-4">
                 <ImageSlot
                   src={siteSettings.heroPhotoUrl}
                   alt="AWS Student Builder Group – UCER community poster and photographs"
@@ -225,8 +225,8 @@ export function HomePage() {
                   className="shadow-sm !bg-white"
                 />
 
-                <div className="grid grid-cols-12 gap-4 items-stretch">
-                  <div className="col-span-7 bg-white border border-[#08070C]/15 p-4 sm:p-5 rounded-xl flex flex-col justify-center">
+                <div className="grid grid-cols-1 min-[420px]:grid-cols-12 gap-3 sm:gap-4 items-stretch">
+                  <div className="min-[420px]:col-span-7 bg-white border border-[#08070C]/15 p-3.5 sm:p-5 rounded-xl flex flex-col justify-center">
                     <p className="font-mono text-[11px] uppercase tracking-wider text-[#243A68] font-medium">
                       Student Builder Group – AWS
                     </p>
@@ -237,12 +237,12 @@ export function HomePage() {
                       Prayagraj, Uttar Pradesh, India
                     </p>
                   </div>
-                  <div className="col-span-5">
+                  <div className="min-[420px]:col-span-5">
                     <ImageSlot
                       src={siteSettings.campusSessionPhotoUrl}
                       alt="Campus session at UCER Prayagraj"
                       slotLabel="Campus Session Slot"
-                      aspectClass="aspect-[4/3]"
+                      aspectClass="aspect-[16/9] min-[420px]:aspect-[4/3]"
                       fit="cover"
                       variant="lavender"
                       roundedClass="rounded-xl"
@@ -259,13 +259,13 @@ export function HomePage() {
 
       {/* 3.2 Introduction */}
       <section className="border-b border-[#08070C]/10 bg-[#FFFFFF]">
-        <RevealSection className="max-w-[1360px] mx-auto px-4 sm:px-8 py-16 md:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-            <div className="lg:col-span-5 space-y-4">
+        <RevealSection className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-16 md:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-10 lg:gap-16 items-start">
+            <div className="lg:col-span-5 space-y-3 sm:space-y-4">
               <p className="font-mono text-xs uppercase tracking-widest text-[#243A68]">
                 01 · Identity &amp; Purpose
               </p>
-              <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight leading-[1.1] text-balance">
+              <h2 className="font-display text-2xl sm:text-4xl font-bold tracking-tight leading-[1.12] text-balance">
                 {siteSettings.introTitle}
               </h2>
             </div>
@@ -308,13 +308,13 @@ export function HomePage() {
 
       {/* 3.3 What We Do */}
       <section className="border-b border-[#08070C]/10 bg-[#FAFAFC]">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-16 md:py-24">
-          <RevealSection className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-16 md:py-24">
+          <RevealSection className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
             <div>
-              <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-3">
+              <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-2 sm:mb-3">
                 02 · Core Disciplines
               </p>
-              <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-balance">
+              <h2 className="font-display text-2xl sm:text-5xl font-bold tracking-tight text-balance">
                 What We Build &amp; Practise
               </h2>
             </div>
@@ -323,13 +323,13 @@ export function HomePage() {
             </p>
           </RevealSection>
 
-          <StaggerGrid className="grid grid-cols-1 md:grid-cols-12 gap-4">
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-12 gap-3.5 sm:gap-4">
             {WHAT_WE_DO.map((item) => {
               const Icon = item.icon;
               return (
                 <StaggerItem key={item.num} className={`${item.span} flex`}>
                   <article
-                    className={`w-full ${item.bg} border border-[#08070C]/12 p-6 sm:p-8 flex flex-col justify-between gap-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#08070C]/40 hover:shadow-xs`}
+                    className={`w-full ${item.bg} border border-[#08070C]/12 p-5 sm:p-8 flex flex-col justify-between gap-4 sm:gap-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#08070C]/40 hover:shadow-xs`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-xs font-medium text-[#243A68] tabular-nums">
@@ -338,7 +338,7 @@ export function HomePage() {
                       <Icon className="w-5 h-5 text-[#08070C]/75" strokeWidth={1.6} />
                     </div>
                     <div>
-                      <h3 className="font-display text-xl font-bold tracking-tight mb-2">
+                      <h3 className="font-display text-lg sm:text-xl font-bold tracking-tight mb-1.5 sm:mb-2">
                         {item.title}
                       </h3>
                       <p className="text-sm text-[#08070C]/75 leading-relaxed">{item.desc}</p>
@@ -353,19 +353,19 @@ export function HomePage() {
 
       {/* 3.4 Upcoming Events */}
       <section className="border-b border-[#08070C]/10 bg-white">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-16 md:py-24">
-          <RevealSection className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-16 md:py-24">
+          <RevealSection className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
             <div>
-              <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-3">
+              <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-2 sm:mb-3">
                 03 · Calendar &amp; Activities
               </p>
-              <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight">
+              <h2 className="font-display text-2xl sm:text-5xl font-bold tracking-tight">
                 Upcoming Events
               </h2>
             </div>
             <Link
               to="/events"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-[#08070C] hover:text-[#243A68] underline underline-offset-4 whitespace-nowrap shrink-0 transition-colors"
+              className="group inline-flex items-center gap-2 py-1 text-sm font-medium text-[#08070C] hover:text-[#243A68] underline underline-offset-4 whitespace-nowrap shrink-0 transition-colors"
             >
               <span>View All Events &amp; Archive</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-150 group-hover:translate-x-1" />
@@ -373,7 +373,7 @@ export function HomePage() {
           </RevealSection>
 
           {upcomingEvents.length === 0 ? (
-            <RevealSection className="border border-[#08070C]/15 bg-[#DCE4F5]/30 p-10 md:p-14 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <RevealSection className="border border-[#08070C]/15 bg-[#DCE4F5]/30 p-6 sm:p-10 md:p-14 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="space-y-2 max-w-xl">
                 <p className="font-mono text-xs uppercase tracking-wider text-[#243A68]">
                   Schedule Pending Publication
@@ -419,7 +419,7 @@ export function HomePage() {
                             }
                           />
                         </Link>
-                        <div className="p-6 space-y-3">
+                        <div className="p-5 sm:p-6 space-y-3">
                           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-[#243A68]">
                             <span>{ev.category}</span>
                             <span aria-hidden="true">·</span>
@@ -438,7 +438,7 @@ export function HomePage() {
                             </span>
                           </div>
 
-                          <h3 className="font-display text-xl font-bold tracking-tight text-balance">
+                          <h3 className="font-display text-lg sm:text-xl font-bold tracking-tight text-balance">
                             <Link
                               to={`/events/${ev.id}`}
                               className="hover:text-[#243A68] transition-colors"
@@ -452,8 +452,8 @@ export function HomePage() {
                           </p>
 
                           <div className="pt-2 space-y-1.5 text-xs text-[#08070C]/70 font-mono">
-                            <div className="flex items-center gap-2">
-                              <Calendar className="w-3.5 h-3.5 text-[#FF9900] shrink-0" />
+                            <div className="flex items-start gap-2">
+                              <Calendar className="w-3.5 h-3.5 text-[#FF9900] shrink-0 mt-0.5" />
                               <span>
                                 {ev.dateDisplayOverride || formatDisplayDate(ev.startDate)}
                                 {ev.timeLabel ? ` · ${ev.timeLabel}` : ''}
@@ -473,10 +473,10 @@ export function HomePage() {
                         </div>
                       </div>
 
-                      <div className="px-6 py-4 border-t border-[#08070C]/10 flex items-center justify-between gap-3">
+                      <div className="px-5 sm:px-6 py-3.5 sm:py-4 border-t border-[#08070C]/10 flex items-center justify-between gap-3">
                         <Link
                           to={`/events/${ev.id}`}
-                          className="text-sm font-medium text-[#08070C] hover:text-[#243A68] inline-flex items-center gap-1.5 transition-colors"
+                          className="py-1.5 text-sm font-medium text-[#08070C] hover:text-[#243A68] inline-flex items-center gap-1.5 transition-colors"
                         >
                           <span>View Details</span>
                           <ArrowRight className="w-4 h-4 transition-transform duration-150 group-hover:translate-x-0.5" />
@@ -484,7 +484,7 @@ export function HomePage() {
                         {ev.registrationOpen && (
                           <Link
                             to={isQrRegistration ? `/events/${ev.id}#poster-qr` : `/register/${ev.id}`}
-                            className="font-mono text-xs uppercase tracking-wider text-[#243A68] hover:text-[#FF9900] font-semibold transition-colors"
+                            className="py-1.5 font-mono text-xs uppercase tracking-wider text-[#243A68] hover:text-[#FF9900] font-semibold transition-colors"
                           >
                             {isQrRegistration ? 'Scan QR' : 'Register'}
                           </Link>
@@ -501,19 +501,19 @@ export function HomePage() {
 
       {/* 3.6 Community Preview */}
       <section className="border-b border-[#08070C]/10 bg-[#E4D5FF]/25">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-16">
-          <RevealSection className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-16">
+          <RevealSection className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 sm:gap-6">
             <div>
-              <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-3">
+              <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-2 sm:mb-3">
                 04 · People Behind the Community
               </p>
-              <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight">
+              <h2 className="font-display text-2xl sm:text-5xl font-bold tracking-tight">
                 Builders &amp; Mentors
               </h2>
             </div>
             <Link
               to="/team"
-              className="group inline-flex items-center gap-2 px-5 py-2.5 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] transition-all whitespace-nowrap shrink-0"
+              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] transition-all whitespace-nowrap shrink-0"
             >
               <span>View Our Team</span>
               <ArrowRight className="w-4 h-4 text-[#FF9900] transition-transform duration-150 group-hover:translate-x-0.5" />
@@ -524,13 +524,13 @@ export function HomePage() {
 
       {/* 3.7 Photo Collage */}
       <section className="border-b border-[#08070C]/10 bg-white">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-16 md:py-24">
-          <RevealSection className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-12">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-16 md:py-24">
+          <RevealSection className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-end mb-8 sm:mb-12">
             <div className="lg:col-span-7">
-              <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-3">
+              <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-2 sm:mb-3">
                 05 · Visual Archive
               </p>
-              <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-balance">
+              <h2 className="font-display text-2xl sm:text-5xl font-bold tracking-tight text-balance">
                 Inside UCER Builder Sessions
               </h2>
             </div>
@@ -540,8 +540,8 @@ export function HomePage() {
             </p>
           </RevealSection>
 
-          <RevealSection className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-            <div className="md:col-span-5 space-y-5">
+          <RevealSection className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-5 items-center">
+            <div className="md:col-span-5 space-y-4 md:space-y-5">
               <div className="group">
                 <ImageSlot
                   src={siteSettings.collagePhotoUrls?.[0]}
@@ -566,7 +566,7 @@ export function HomePage() {
               </div>
             </div>
 
-            <div className="md:col-span-3 space-y-5 md:-mt-6">
+            <div className="md:col-span-3 space-y-4 md:space-y-5 md:-mt-6">
               <div className="group">
                 <ImageSlot
                   src={siteSettings.collagePhotoUrls?.[2]}
@@ -591,7 +591,7 @@ export function HomePage() {
               </div>
             </div>
 
-            <div className="md:col-span-4 space-y-5 md:mt-6">
+            <div className="md:col-span-4 space-y-4 md:space-y-5 md:mt-6">
               <div className="group">
                 <ImageSlot
                   src={siteSettings.collagePhotoUrls?.[4]}
@@ -620,20 +620,20 @@ export function HomePage() {
       </section>
 
       {/* 3.8 Final CTA */}
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-white py-10 sm:py-16 md:py-24">
         <RevealSection className="max-w-[1360px] mx-auto px-4 sm:px-8">
-          <div className="bg-[#E4D5FF] rounded-3xl p-8 sm:p-12 md:p-16 border border-[#08070C]/10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
+          <div className="bg-[#E4D5FF] rounded-2xl sm:rounded-3xl p-6 sm:p-12 md:p-16 border border-[#08070C]/10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
+            <div className="lg:col-span-8 space-y-3 sm:space-y-4">
               <p className="font-mono text-xs uppercase tracking-widest text-[#243A68]">
                 Student Builder Group – AWS · UCER Prayagraj
               </p>
               <h2
-                className="font-display font-bold tracking-tight leading-[0.98] text-[#08070C] text-balance"
-                style={{ fontSize: 'clamp(2.25rem, 4.5vw, 4rem)' }}
+                className="font-display font-bold tracking-tight leading-[1] sm:leading-[0.98] text-[#08070C] text-balance"
+                style={{ fontSize: 'clamp(1.85rem, 4.5vw, 4rem)' }}
               >
                 YOUR NEXT BIG IDEA STARTS HERE.
               </h2>
-              <p className="font-editorial italic text-2xl sm:text-3xl text-[#243A68]">
+              <p className="font-editorial italic text-xl sm:text-3xl text-[#243A68]">
                 Learn together. Build together. Grow together.
               </p>
             </div>
@@ -641,14 +641,14 @@ export function HomePage() {
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-end">
               <Link
                 to="/register"
-                className="group inline-flex items-center justify-center gap-2 px-7 py-4 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] transition-all whitespace-nowrap"
+                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 sm:py-4 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] transition-all whitespace-nowrap"
               >
                 <span>Become a Member</span>
                 <ArrowUpRight className="w-4 h-4 text-[#FF9900] transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
               <Link
                 to="/events"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-white border border-[#08070C]/20 text-[#08070C] text-sm font-medium hover:border-[#08070C] active:scale-[0.98] transition-all whitespace-nowrap"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 sm:py-4 bg-white border border-[#08070C]/20 text-[#08070C] text-sm font-medium hover:border-[#08070C] active:scale-[0.98] transition-all whitespace-nowrap"
               >
                 <span>Explore Events</span>
               </Link>

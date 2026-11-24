@@ -24,21 +24,26 @@ export function Navbar() {
 
   useEffect(() => {
     if (!mobileOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') setMobileOpen(false);
     }
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, [mobileOpen]);
 
   return (
     <>
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#08070C]/10">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 h-16 md:h-[72px] flex items-center justify-between gap-4 xl:gap-8">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 h-16 md:h-[72px] flex items-center justify-between gap-3 sm:gap-4 xl:gap-8">
           {/* Zone 1: Dual Logos + Brand Wordmark */}
           <Link
             to="/"
-            className="flex items-center gap-3.5 shrink-0 group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#243A68]"
+            className="flex items-center gap-3.5 min-w-0 shrink-0 group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#243A68]"
             aria-label="AWS Student Builder Group – UCER Home"
           >
             <LogoLockup
@@ -115,25 +120,25 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 w-full max-w-xs bg-white h-full flex flex-col justify-between p-6 border-l border-[#08070C]/15 overflow-y-auto shadow-2xl"
+              className="relative z-10 w-[88vw] max-w-xs bg-white h-full flex flex-col justify-between p-5 sm:p-6 border-l border-[#08070C]/15 overflow-y-auto shadow-2xl"
               aria-label="Mobile menu"
             >
               <div>
-                <div className="flex items-center justify-between pb-5 border-b border-[#08070C]/10">
-                  <span className="font-display text-sm font-bold tracking-tight">
+                <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#08070C]/10">
+                  <span className="font-display text-sm font-bold tracking-tight truncate">
                     Student Builder Group – UCER
                   </span>
                   <button
                     type="button"
                     onClick={() => setMobileOpen(false)}
-                    className="w-10 h-10 inline-flex items-center justify-center border border-[#08070C]/15 text-[#08070C] hover:border-[#08070C] transition-colors cursor-pointer"
+                    className="w-11 h-11 inline-flex items-center justify-center border border-[#08070C]/15 text-[#08070C] hover:border-[#08070C] transition-colors cursor-pointer shrink-0"
                     aria-label="Close navigation menu"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
-                <div className="py-5 border-b border-[#08070C]/10">
+                <div className="py-4 border-b border-[#08070C]/10">
                   <LogoLockup
                     awsLogoUrl={siteSettings.awsLogoUrl}
                     ucerLogoUrl={siteSettings.ucerLogoUrl}
@@ -141,14 +146,14 @@ export function Navbar() {
                   />
                 </div>
 
-                <nav className="flex flex-col py-6 gap-1.5" aria-label="Mobile navigation">
+                <nav className="flex flex-col py-5 gap-1.5" aria-label="Mobile navigation">
                   {NAV_LINKS.map((item) => (
                     <NavLink
                       key={item.to}
                       to={item.to}
                       end={item.to === '/'}
                       className={({ isActive }) =>
-                        `py-3 px-3 font-display text-xl font-medium transition-colors ${
+                        `py-3 px-3 min-h-[44px] flex items-center font-display text-lg sm:text-xl font-medium transition-colors ${
                           isActive
                             ? 'bg-[#E4D5FF]/60 text-[#08070C] border-l-2 border-[#FF9900]'
                             : 'text-[#08070C]/75 hover:text-[#08070C] hover:bg-[#FAFAFC]'
@@ -161,17 +166,17 @@ export function Navbar() {
                 </nav>
               </div>
 
-              <div className="pt-6 border-t border-[#08070C]/10 space-y-3">
+              <div className="pt-5 border-t border-[#08070C]/10 space-y-3">
                 <Link
                   to="/register"
-                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] transition-colors"
+                  className="w-full min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] transition-colors"
                 >
                   <span>Join Our Community</span>
                   <ArrowUpRight className="w-4 h-4 text-[#FF9900]" />
                 </Link>
                 <Link
                   to="/admin"
-                  className="w-full inline-flex items-center justify-center px-5 py-2.5 border border-[#08070C]/20 text-xs font-mono uppercase tracking-wider text-[#243A68] hover:border-[#08070C] transition-colors"
+                  className="w-full min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 border border-[#08070C]/20 text-xs font-mono uppercase tracking-wider text-[#243A68] hover:border-[#08070C] transition-colors"
                 >
                   Admin Portal
                 </Link>

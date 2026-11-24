@@ -48,10 +48,10 @@ export function AdminInboxTab({ messages }: { messages: ContactMessage[] }) {
       ) : (
         <div className="space-y-4">
           {messages.map((m) => (
-            <article key={m.id} className="border border-[#08070C]/15 bg-white p-6 space-y-3">
+            <article key={m.id} className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-3">
               <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <p className="font-mono text-xs text-[#243A68]">
+                <div className="min-w-0">
+                  <p className="font-mono text-xs text-[#243A68] break-words">
                     {m.name} ({m.email}) · {formatFirestoreTimestamp(m.createdAt)}
                   </p>
                   <h3 className="font-display text-lg font-bold mt-1">{m.subject}</h3>
@@ -179,7 +179,7 @@ export function AdminRolesTab({ admins }: { admins: AdminAccount[] }) {
 
       <form
         onSubmit={handleAddAdmin}
-        className="border border-[#08070C]/15 bg-white p-6 space-y-4"
+        className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-4"
       >
         {errorMsg && (
           <div className="p-3 bg-red-50 border border-red-200 text-red-900 text-sm">
@@ -234,7 +234,7 @@ export function AdminRolesTab({ admins }: { admins: AdminAccount[] }) {
       </form>
 
       <div className="border border-[#08070C]/15 bg-white overflow-x-auto">
-        <table className="w-full text-left border-collapse text-sm">
+        <table className="w-full min-w-[560px] text-left border-collapse text-sm">
           <thead>
             <tr className="border-b border-[#08070C]/15 bg-[#FAFAFC] font-mono text-[11px] uppercase tracking-wider text-[#08070C]/65">
               <th className="py-3 px-4">Administrator</th>

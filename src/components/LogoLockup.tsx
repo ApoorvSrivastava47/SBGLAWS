@@ -23,11 +23,11 @@ function SingleLogoFrame({
     setFailed(false);
   }, [src]);
 
-  const heightClass = size === 'sm' ? 'h-7 sm:h-8 min-w-[40px]' : 'h-9 sm:h-10 min-w-[52px]';
+  const heightClass = size === 'sm' ? 'h-6 sm:h-8 min-w-[36px]' : 'h-8 sm:h-10 min-w-[48px]';
   const imgSizingClass =
     size === 'sm'
-      ? 'h-7 sm:h-8 w-auto max-w-[175px] xl:max-w-[205px]'
-      : 'h-9 sm:h-11 w-auto max-w-[245px]';
+      ? 'h-6 sm:h-8 w-auto max-w-[104px] min-[400px]:max-w-[140px] sm:max-w-[175px] xl:max-w-[205px]'
+      : 'h-8 sm:h-11 w-auto max-w-[155px] sm:max-w-[245px]';
 
   if (src && src.trim() && !failed) {
     return (
@@ -53,14 +53,14 @@ function SingleLogoFrame({
 
 export function LogoLockup({ awsLogoUrl, ucerLogoUrl, size = 'sm' }: LogoSlotProps) {
   return (
-    <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+    <div className="flex items-center gap-2 sm:gap-3 min-w-0 shrink-0">
       <SingleLogoFrame
         src={awsLogoUrl}
         alt="AWS Logo"
         fallbackLabel="AWS Logo"
         size={size}
       />
-      <span className="h-5 w-px bg-[#08070C]/20 shrink-0" aria-hidden="true" />
+      <span className="h-4 sm:h-5 w-px bg-[#08070C]/20 shrink-0" aria-hidden="true" />
       <SingleLogoFrame
         src={ucerLogoUrl}
         alt="United College of Engineering & Research Logo"

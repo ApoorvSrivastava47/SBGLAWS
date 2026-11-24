@@ -87,33 +87,33 @@ export function ContactPage() {
       />
 
       <section className="border-b border-[#08070C]/10 bg-[#FAFAFC]">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-20">
-          <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-4">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-20">
+          <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-3 sm:mb-4">
             Contact &amp; Campus Presence · UCER Prayagraj
           </p>
           <h1
-            className="font-display font-bold tracking-tight leading-[0.98]"
-            style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)' }}
+            className="font-display font-bold tracking-tight leading-[1.02] sm:leading-[0.98]"
+            style={{ fontSize: 'clamp(2rem, 5.5vw, 4.5rem)' }}
           >
             Connect With Us
           </h1>
         </div>
       </section>
 
-      <RevealSection className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <RevealSection className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12">
         {/* Institutional Details + Campus Map Placeholder */}
-        <div className="lg:col-span-5 space-y-8">
-          <div className="space-y-6 border border-[#08070C]/15 p-7 bg-[#E4D5FF]/25">
+        <div className="lg:col-span-5 space-y-6 sm:space-y-8">
+          <div className="space-y-5 sm:space-y-6 border border-[#08070C]/15 p-5 sm:p-7 bg-[#E4D5FF]/25">
             {siteSettings.contactEmail && (
-              <div className="flex items-start gap-3.5">
+              <div className="flex items-start gap-3.5 min-w-0">
                 <Mail className="w-5 h-5 text-[#243A68] mt-0.5 shrink-0" />
-                <div>
+                <div className="min-w-0">
                   <p className="font-mono text-xs uppercase tracking-wider text-[#08070C]/60">
                     Community Email
                   </p>
                   <a
                     href={`mailto:${siteSettings.contactEmail}`}
-                    className="text-base font-medium underline decoration-[#08070C]/30 underline-offset-4 hover:decoration-[#FF9900] transition-colors"
+                    className="text-base font-medium break-all underline decoration-[#08070C]/30 underline-offset-4 hover:decoration-[#FF9900] transition-colors"
                   >
                     {siteSettings.contactEmail}
                   </a>
@@ -152,13 +152,13 @@ export function ContactPage() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-[#08070C]/10 flex flex-wrap gap-4 text-xs font-mono uppercase tracking-wider">
+            <div className="pt-3 border-t border-[#08070C]/10 flex flex-wrap gap-4 text-xs font-mono uppercase tracking-wider">
               {siteSettings.linkedinUrl ? (
                 <a
                   href={siteSettings.linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 hover:text-[#243A68] transition-colors"
+                  className="inline-flex items-center gap-1 py-1.5 sm:py-0 hover:text-[#243A68] transition-colors"
                 >
                   LinkedIn <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
@@ -170,7 +170,7 @@ export function ContactPage() {
                   href={siteSettings.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 hover:text-[#243A68] transition-colors"
+                  className="inline-flex items-center gap-1 py-1.5 sm:py-0 hover:text-[#243A68] transition-colors"
                 >
                   Instagram <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
@@ -187,12 +187,12 @@ export function ContactPage() {
               <iframe
                 title="UCER Prayagraj Campus Map"
                 src={siteSettings.mapEmbedUrl}
-                className="w-full h-72 border-0"
+                className="w-full h-56 sm:h-72 border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
             ) : (
-              <div className="h-72 p-6 flex flex-col items-center justify-center text-center space-y-2">
+              <div className="h-56 sm:h-72 p-5 sm:p-6 flex flex-col items-center justify-center text-center space-y-2">
                 <MapPin className="w-6 h-6 text-[#243A68]" />
                 <p className="font-mono text-xs uppercase tracking-wider text-[#243A68]">
                   UCER Campus Google Maps Embed Slot
@@ -211,7 +211,7 @@ export function ContactPage() {
         <div className="lg:col-span-7">
           <form
             onSubmit={handleSubmit}
-            className="border border-[#08070C]/15 p-6 sm:p-10 space-y-6 bg-white"
+            className="border border-[#08070C]/15 p-5 sm:p-10 space-y-5 sm:space-y-6 bg-white"
             noValidate
           >
             <div className="border-b border-[#08070C]/10 pb-4">
@@ -258,7 +258,7 @@ export function ContactPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               <div>
                 <label className="block font-mono text-xs uppercase tracking-wider text-[#08070C]/75 mb-1.5">
                   Name *
@@ -270,7 +270,7 @@ export function ContactPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your name"
-                  className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                 />
               </div>
 
@@ -285,7 +285,7 @@ export function ContactPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
                 />
               </div>
             </div>
@@ -301,7 +301,7 @@ export function ContactPage() {
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="Collaboration, workshop query, membership..."
-                className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
               />
             </div>
 
@@ -316,14 +316,14 @@ export function ContactPage() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Write your message (minimum 10 characters)..."
-                className="w-full px-3.5 py-2.5 text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
+                className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-[#08070C]/25 focus:border-[#08070C] focus:outline-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={submitting}
-              className="px-7 py-3.5 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] disabled:opacity-50 transition-all cursor-pointer"
+              className="w-full sm:w-auto min-h-[44px] px-7 py-3.5 bg-[#08070C] text-white text-sm font-medium hover:bg-[#243A68] active:scale-[0.98] disabled:opacity-50 transition-all cursor-pointer"
             >
               {submitting ? 'Sending...' : 'Send Message'}
             </button>

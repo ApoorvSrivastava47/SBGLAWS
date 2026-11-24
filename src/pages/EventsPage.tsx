@@ -48,14 +48,14 @@ export function EventsPage() {
 
       {/* Editorial Header */}
       <section className="border-b border-[#08070C]/10 bg-[#FAFAFC]">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-20">
-          <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-4">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-20">
+          <p className="font-mono text-xs uppercase tracking-widest text-[#243A68] mb-3 sm:mb-4">
             Events &amp; Activities · UCER Prayagraj
           </p>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-end">
             <h1
-              className="lg:col-span-7 font-display font-bold tracking-tight leading-[0.98]"
-              style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)' }}
+              className="lg:col-span-7 font-display font-bold tracking-tight leading-[1.02] sm:leading-[0.98]"
+              style={{ fontSize: 'clamp(2rem, 5.5vw, 4.5rem)' }}
             >
               Workshops, Hackathons &amp; Archive
             </h1>
@@ -68,9 +68,9 @@ export function EventsPage() {
       </section>
 
       {/* Tabs & Search */}
-      <section className="border-b border-[#08070C]/10 bg-white sticky top-16 md:top-[72px] z-30">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-1 bg-[#F4F4F8] p-1 w-fit">
+      <section className="border-b border-[#08070C]/10 bg-white md:sticky md:top-[72px] z-30">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-1 bg-[#F4F4F8] p-1 w-full sm:w-fit overflow-x-auto">
             {(
               [
                 { id: 'upcoming', label: 'Upcoming Events', count: categorized.upcoming.length },
@@ -82,7 +82,7 @@ export function EventsPage() {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-3.5 py-2 text-xs font-medium whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
+                className={`flex-1 sm:flex-initial px-2.5 sm:px-3.5 py-2.5 sm:py-2 text-[11px] sm:text-xs font-medium whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
                   activeTab === tab.id
                     ? 'bg-[#08070C] text-white'
                     : 'text-[#08070C]/70 hover:text-[#08070C]'
@@ -101,16 +101,16 @@ export function EventsPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search events or venues..."
               aria-label="Search events"
-              className="w-full pl-9 pr-3 py-2 text-sm border border-[#08070C]/20 focus:border-[#08070C] focus:outline-none bg-white"
+              className="w-full pl-9 pr-3 py-2.5 sm:py-2 text-base sm:text-sm border border-[#08070C]/20 focus:border-[#08070C] focus:outline-none bg-white"
             />
           </div>
         </div>
       </section>
 
       {/* Event List */}
-      <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-14 md:py-20">
+      <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 sm:py-14 md:py-20">
         {currentList.length === 0 ? (
-          <RevealSection className="border border-[#08070C]/15 bg-[#DCE4F5]/30 p-10 md:p-14 max-w-3xl space-y-3">
+          <RevealSection className="border border-[#08070C]/15 bg-[#DCE4F5]/30 p-6 sm:p-10 md:p-14 max-w-3xl space-y-3">
             <p className="font-mono text-xs uppercase tracking-wider text-[#243A68]">
               {activeTab === 'upcoming'
                 ? 'No Upcoming Events Published'
@@ -131,7 +131,7 @@ export function EventsPage() {
             </p>
           </RevealSection>
         ) : (
-          <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
             {currentList.map((ev) => {
               const expired = isDeadlinePassed(ev.registrationDeadline);
               const canRegister =
@@ -167,7 +167,7 @@ export function EventsPage() {
                         />
                       </Link>
 
-                      <div className="p-6 space-y-3">
+                      <div className="p-5 sm:p-6 space-y-3">
                         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-[#243A68]">
                           <span>{ev.category}</span>
                           <span aria-hidden="true">·</span>
@@ -187,7 +187,7 @@ export function EventsPage() {
                           </span>
                         </div>
 
-                        <h2 className="font-display text-2xl font-bold tracking-tight text-balance">
+                        <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-balance">
                           <Link to={`/events/${ev.id}`} className="hover:text-[#243A68] transition-colors">
                             {ev.title}
                           </Link>
@@ -198,8 +198,8 @@ export function EventsPage() {
                         </p>
 
                         <div className="pt-2 space-y-1.5 text-xs font-mono text-[#08070C]/70">
-                          <div className="flex items-center gap-2">
-                            <Calendar className="w-3.5 h-3.5 text-[#FF9900] shrink-0" />
+                          <div className="flex items-start gap-2">
+                            <Calendar className="w-3.5 h-3.5 text-[#FF9900] shrink-0 mt-0.5" />
                             <span>
                               {ev.dateDisplayOverride || formatDisplayDate(ev.startDate)}
                               {ev.timeLabel ? ` · ${ev.timeLabel}` : ''}
@@ -225,10 +225,10 @@ export function EventsPage() {
                       </div>
                     </div>
 
-                    <div className="px-6 py-4 border-t border-[#08070C]/10 flex items-center justify-between gap-3">
+                    <div className="px-5 sm:px-6 py-3.5 sm:py-4 border-t border-[#08070C]/10 flex items-center justify-between gap-3">
                       <Link
                         to={`/events/${ev.id}`}
-                        className="text-sm font-medium inline-flex items-center gap-1.5 hover:text-[#243A68] transition-colors"
+                        className="py-1.5 text-sm font-medium inline-flex items-center gap-1.5 hover:text-[#243A68] transition-colors"
                       >
                         <span>View Details</span>
                         <ArrowRight className="w-4 h-4 transition-transform duration-150 group-hover:translate-x-0.5" />
@@ -237,7 +237,7 @@ export function EventsPage() {
                       {canRegister && (
                         <Link
                           to={isQrRegistration ? `/events/${ev.id}#poster-qr` : `/register/${ev.id}`}
-                          className="px-4 py-2 bg-[#08070C] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#243A68] active:scale-[0.98] transition-all"
+                          className="px-4 py-2.5 sm:py-2 bg-[#08070C] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#243A68] active:scale-[0.98] transition-all whitespace-nowrap shrink-0"
                         >
                           {isQrRegistration ? 'Scan Poster QR' : 'Register'}
                         </Link>

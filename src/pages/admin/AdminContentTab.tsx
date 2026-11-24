@@ -225,7 +225,7 @@ export function AdminContentTab({ allMilestones, allAnnouncements }: AdminConten
         </div>
 
         {/* Hero & Logos */}
-        <div className="border border-[#08070C]/15 bg-white p-6 space-y-4">
+        <div className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-4">
           <h3 className="font-display text-lg font-bold border-b border-[#08070C]/10 pb-2">
             Hero &amp; Brand Identity
           </h3>
@@ -306,7 +306,7 @@ export function AdminContentTab({ allMilestones, allAnnouncements }: AdminConten
         </div>
 
         {/* Homepage Intro & 6 Collage Slots */}
-        <div className="border border-[#08070C]/15 bg-white p-6 space-y-4">
+        <div className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-4">
           <h3 className="font-display text-lg font-bold border-b border-[#08070C]/10 pb-2">
             Introduction &amp; Photo Collage Slots
           </h3>
@@ -353,7 +353,7 @@ export function AdminContentTab({ allMilestones, allAnnouncements }: AdminConten
         </div>
 
         {/* Community Statistics */}
-        <div className="border border-[#08070C]/15 bg-white p-6 space-y-4">
+        <div className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#08070C]/10 pb-2">
             <h3 className="font-display text-lg font-bold">Community Statistics</h3>
             <label className="flex items-center gap-2 text-sm font-medium">
@@ -422,7 +422,7 @@ export function AdminContentTab({ allMilestones, allAnnouncements }: AdminConten
         </div>
 
         {/* About Us Content */}
-        <div className="border border-[#08070C]/15 bg-white p-6 space-y-4">
+        <div className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-4">
           <h3 className="font-display text-lg font-bold border-b border-[#08070C]/10 pb-2">
             About Us Story, Vision &amp; Mission
           </h3>
@@ -513,7 +513,7 @@ export function AdminContentTab({ allMilestones, allAnnouncements }: AdminConten
         </div>
 
         {/* Contact Details & Social Links */}
-        <div className="border border-[#08070C]/15 bg-white p-6 space-y-4">
+        <div className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-4">
           <h3 className="font-display text-lg font-bold border-b border-[#08070C]/10 pb-2">
             Contact Details &amp; Social Media
           </h3>
@@ -593,7 +593,7 @@ export function AdminContentTab({ allMilestones, allAnnouncements }: AdminConten
       </form>
 
       {/* Journey Milestones CRUD */}
-      <div className="border border-[#08070C]/15 bg-white p-6 space-y-5">
+      <div className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-5">
         <h3 className="font-display text-xl font-bold">Our Journey Timeline Milestones</h3>
 
         <form onSubmit={addMilestone} className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
@@ -681,7 +681,7 @@ export function AdminContentTab({ allMilestones, allAnnouncements }: AdminConten
       </div>
 
       {/* Announcements CRUD */}
-      <div className="border border-[#08070C]/15 bg-white p-6 space-y-5">
+      <div className="border border-[#08070C]/15 bg-white p-4 sm:p-6 space-y-5">
         <h3 className="font-display text-xl font-bold">Site-Wide Announcements</h3>
 
         <form onSubmit={addAnnouncement} className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
