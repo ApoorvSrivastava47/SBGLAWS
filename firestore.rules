@@ -1,0 +1,556 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Default-Deny Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // -------------------------------------------------------------------------
+    // Global Helpers
+    // -------------------------------------------------------------------------
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidLockId(id) {
+      return id is string && id.size() >= 3 && id.size() <= 300 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidEmailDocId(id) {
+      return id is string
+        && id.size() >= 5
+        && id.size() <= 160
+        && id == id.lower()
+        && id.matches('^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$');
+    }
+
+    function isBootstrappedSuperAdmin() {
+      return isVerifiedUser() && request.auth.token.email.lower() == 'eng.apoorv@gmail.com';
+    }
+
+    function adminDocPath() {
+      return /databases/$(database)/documents/admins/$(request.auth.token.email.lower());
+    }
+
+    function hasActiveAdminDoc() {
+      return isVerifiedUser()
+        && exists(adminDocPath())
+        && get(adminDocPath()).data.isActive == true;
+    }
+
+    function isAnyAdmin() {
+      return isBootstrappedSuperAdmin() || hasActiveAdminDoc();
+    }
+
+    function isSuperAdmin() {
+      return isBootstrappedSuperAdmin()
+        || (hasActiveAdminDoc() && get(adminDocPath()).data.role == 'super_admin');
+    }
+
+    function isEventAdmin() {
+      return isSuperAdmin()
+        || (hasActiveAdminDoc() && get(adminDocPath()).data.role == 'event_admin');
+    }
+
+    function isContentAdmin() {
+      return isSuperAdmin()
+        || (hasActiveAdminDoc() && get(adminDocPath()).data.role == 'content_admin');
+    }
+
+    function isTeamAdmin() {
+      return isSuperAdmin()
+        || (hasActiveAdminDoc() && get(adminDocPath()).data.role == 'team_admin');
+    }
+
+    function isOptionalString(data, field, maxLen) {
+      return !(field in data) || (data[field] is string && data[field].size() <= maxLen);
+    }
+
+    function isValidEmailStr(val) {
+      return val is string
+        && val.size() >= 5
+        && val.size() <= 160
+        && val.matches('^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$');
+    }
+
+    // -------------------------------------------------------------------------
+    // Entity Validation Blueprints
+    // -------------------------------------------------------------------------
+
+    function isValidSiteSettings(data) {
+      return data.keys().hasAll([
+          'heroHeadline', 'heroSubheadline', 'heroDescription',
+          'introTitle', 'introBody', 'statsConfigured', 'updatedAt', 'updatedBy'
+        ])
+        && data.keys().hasOnly([
+          'heroHeadline', 'heroSubheadline', 'heroDescription', 'heroPhotoUrl',
+          'campusSessionPhotoUrl', 'awsLogoUrl', 'ucerLogoUrl', 'introTitle', 'introBody',
+          'collagePhotoUrls', 'statsConfigured', 'statsTotalMembers', 'statsEventsConducted',
+          'statsWorkshopsOrganised', 'statsProjectsDeveloped',
+          'aboutStoryTitle', 'aboutStoryBody', 'aboutVision', 'aboutMission',
+          'aboutObjectives', 'contactEmail', 'contactAddress',
+          'facultyCoordinatorContact', 'linkedinUrl', 'instagramUrl', 'githubUrl',
+          'mapEmbedUrl', 'updatedAt', 'updatedBy'
+        ])
+        && data.heroHeadline is string && data.heroHeadline.size() >= 1 && data.heroHeadline.size() <= 120
+        && data.heroSubheadline is string && data.heroSubheadline.size() >= 1 && data.heroSubheadline.size() <= 200
+        && data.heroDescription is string && data.heroDescription.size() >= 1 && data.heroDescription.size() <= 600
+        && isOptionalString(data, 'heroPhotoUrl', 1000)
+        && isOptionalString(data, 'campusSessionPhotoUrl', 1000)
+        && isOptionalString(data, 'awsLogoUrl', 1000)
+        && isOptionalString(data, 'ucerLogoUrl', 1000)
+        && data.introTitle is string && data.introTitle.size() >= 1 && data.introTitle.size() <= 160
+        && data.introBody is string && data.introBody.size() >= 1 && data.introBody.size() <= 2500
+        && (!('collagePhotoUrls' in data) || (data.collagePhotoUrls is list && data.collagePhotoUrls.size() <= 6 && (data.collagePhotoUrls.size() == 0 || data.collagePhotoUrls[0] is string)))
+        && data.statsConfigured is bool
+        && (!('statsTotalMembers' in data) || (data.statsTotalMembers is number && data.statsTotalMembers >= 0 && data.statsTotalMembers <= 1000000))
+        && (!('statsEventsConducted' in data) || (data.statsEventsConducted is number && data.statsEventsConducted >= 0 && data.statsEventsConducted <= 100000))
+        && (!('statsWorkshopsOrganised' in data) || (data.statsWorkshopsOrganised is number && data.statsWorkshopsOrganised >= 0 && data.statsWorkshopsOrganised <= 100000))
+        && (!('statsProjectsDeveloped' in data) || (data.statsProjectsDeveloped is number && data.statsProjectsDeveloped >= 0 && data.statsProjectsDeveloped <= 100000))
+        && isOptionalString(data, 'aboutStoryTitle', 160)
+        && isOptionalString(data, 'aboutStoryBody', 4000)
+        && isOptionalString(data, 'aboutVision', 600)
+        && (!('aboutMission' in data) || (data.aboutMission is list && data.aboutMission.size() <= 10 && (data.aboutMission.size() == 0 || data.aboutMission[0] is string)))
+        && (!('aboutObjectives' in data) || (data.aboutObjectives is list && data.aboutObjectives.size() <= 10 && (data.aboutObjectives.size() == 0 || data.aboutObjectives[0] is map)))
+        && isOptionalString(data, 'contactEmail', 160)
+        && isOptionalString(data, 'contactAddress', 400)
+        && isOptionalString(data, 'facultyCoordinatorContact', 240)
+        && isOptionalString(data, 'linkedinUrl', 500)
+        && isOptionalString(data, 'instagramUrl', 500)
+        && isOptionalString(data, 'githubUrl', 500)
+        && isOptionalString(data, 'mapEmbedUrl', 1000)
+        && data.updatedAt is timestamp
+        && data.updatedBy is string && data.updatedBy.size() >= 1 && data.updatedBy.size() <= 160;
+    }
+
+    function isValidAdminAccount(data, adminEmail) {
+      return data.keys().hasAll(['email', 'displayName', 'role', 'isActive', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['email', 'displayName', 'role', 'isActive', 'addedBy', 'createdAt', 'updatedAt'])
+        && isValidEmailStr(data.email)
+        && data.email.lower() == adminEmail
+        && data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 120
+        && data.role in ['super_admin', 'event_admin', 'content_admin', 'team_admin']
+        && data.isActive is bool
+        && isOptionalString(data, 'addedBy', 160)
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidUserProfile(data, userId) {
+      return data.keys().hasAll(['uid', 'email', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'email', 'displayName', 'photoUrl', 'createdAt', 'updatedAt'])
+        && data.uid is string && data.uid == userId && data.uid == request.auth.uid
+        && isValidEmailStr(data.email)
+        && isOptionalString(data, 'displayName', 120)
+        && isOptionalString(data, 'photoUrl', 1000)
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidTeamMember(data) {
+      return data.keys().hasAll([
+          'fullName', 'designation', 'category', 'hierarchyOrder',
+          'isFeatured', 'isActive', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'fullName', 'designation', 'category', 'department', 'academicYear',
+          'responsibility', 'bio', 'photoUrl', 'linkedinUrl', 'githubUrl',
+          'hierarchyOrder', 'isFeatured', 'isActive', 'createdAt', 'updatedAt'
+        ])
+        && data.fullName is string && data.fullName.size() >= 1 && data.fullName.size() <= 120
+        && data.designation is string && data.designation.size() >= 1 && data.designation.size() <= 120
+        && data.category in [
+          'Faculty Coordinators and Mentors',
+          'Community Leadership',
+          'Technical Leadership',
+          'Operations and Management',
+          'Technical Team',
+          'Event Management',
+          'Community and Outreach',
+          'General Members'
+        ]
+        && isOptionalString(data, 'department', 120)
+        && isOptionalString(data, 'academicYear', 40)
+        && isOptionalString(data, 'responsibility', 300)
+        && isOptionalString(data, 'bio', 1000)
+        && isOptionalString(data, 'photoUrl', 1000)
+        && isOptionalString(data, 'linkedinUrl', 500)
+        && isOptionalString(data, 'githubUrl', 500)
+        && data.hierarchyOrder is number && data.hierarchyOrder >= 0 && data.hierarchyOrder <= 10000
+        && data.isFeatured is bool
+        && data.isActive is bool
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidCommunityEvent(data) {
+      return data.keys().hasAll([
+          'title', 'slug', 'category', 'statusOverride', 'startDate', 'endDate',
+          'venue', 'shortDescription', 'fullDescription', 'eligibilityScope',
+          'registrationMode', 'registrationOpen', 'isPublished', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'title', 'slug', 'category', 'statusOverride', 'startDate', 'endDate',
+          'timeLabel', 'venue', 'posterUrl', 'shortDescription', 'fullDescription',
+          'instructions', 'highlights', 'winnersSummary', 'participationSummary',
+          'organisingTeamNames', 'galleryUrls', 'eligibilityScope', 'registrationMode',
+          'maxTeamSize', 'requireStudentId', 'registrationOpen', 'registrationDeadline',
+          'customQuestions', 'isPublished', 'createdAt', 'updatedAt'
+        ])
+        && data.title is string && data.title.size() >= 1 && data.title.size() <= 160
+        && data.slug is string && isValidId(data.slug)
+        && data.category is string && data.category.size() >= 1 && data.category.size() <= 80
+        && data.statusOverride in ['auto', 'upcoming', 'ongoing', 'past']
+        && data.startDate is string && data.startDate.size() >= 4 && data.startDate.size() <= 40
+        && data.endDate is string && data.endDate.size() >= 4 && data.endDate.size() <= 40
+        && isOptionalString(data, 'timeLabel', 80)
+        && data.venue is string && data.venue.size() >= 1 && data.venue.size() <= 200
+        && isOptionalString(data, 'posterUrl', 1000)
+        && data.shortDescription is string && data.shortDescription.size() >= 1 && data.shortDescription.size() <= 400
+        && data.fullDescription is string && data.fullDescription.size() >= 1 && data.fullDescription.size() <= 5000
+        && isOptionalString(data, 'instructions', 2000)
+        && (!('highlights' in data) || (data.highlights is list && data.highlights.size() <= 15 && (data.highlights.size() == 0 || data.highlights[0] is string)))
+        && isOptionalString(data, 'winnersSummary', 1500)
+        && isOptionalString(data, 'participationSummary', 400)
+        && (!('organisingTeamNames' in data) || (data.organisingTeamNames is list && data.organisingTeamNames.size() <= 20 && (data.organisingTeamNames.size() == 0 || data.organisingTeamNames[0] is string)))
+        && (!('galleryUrls' in data) || (data.galleryUrls is list && data.galleryUrls.size() <= 20 && (data.galleryUrls.size() == 0 || data.galleryUrls[0] is string)))
+        && data.eligibilityScope in ['ucer_only', 'open_college']
+        && data.registrationMode in ['individual', 'team', 'both']
+        && (!('maxTeamSize' in data) || (data.maxTeamSize is number && data.maxTeamSize >= 1 && data.maxTeamSize <= 10))
+        && (!('requireStudentId' in data) || data.requireStudentId is bool)
+        && data.registrationOpen is bool
+        && isOptionalString(data, 'registrationDeadline', 40)
+        && (!('customQuestions' in data) || (data.customQuestions is list && data.customQuestions.size() <= 10 && (data.customQuestions.size() == 0 || data.customQuestions[0] is map)))
+        && data.isPublished is bool
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidRegistration(data) {
+      return data.keys().hasAll([
+          'eventId', 'eventTitle', 'registrationCode', 'lockId', 'fullName',
+          'collegeEmail', 'contactNumber', 'collegeName', 'department',
+          'academicYear', 'registrationType', 'consentAccepted', 'status',
+          'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'eventId', 'eventTitle', 'registrationCode', 'lockId', 'fullName',
+          'collegeEmail', 'contactNumber', 'collegeName', 'department',
+          'academicYear', 'studentId', 'registrationType', 'teamName',
+          'teamMembers', 'customAnswers', 'consentAccepted', 'status',
+          'createdAt', 'updatedAt'
+        ])
+        && isValidId(data.eventId)
+        && data.eventTitle is string && data.eventTitle.size() >= 1 && data.eventTitle.size() <= 160
+        && data.registrationCode is string && data.registrationCode.size() >= 6 && data.registrationCode.size() <= 32 && data.registrationCode.matches('^[A-Z0-9\\-]+$')
+        && isValidLockId(data.lockId)
+        && data.fullName is string && data.fullName.size() >= 2 && data.fullName.size() <= 120
+        && isValidEmailStr(data.collegeEmail)
+        && data.lockId == data.eventId + '__' + data.collegeEmail.lower().replace('[^a-z0-9]', '_')
+        && data.contactNumber is string && data.contactNumber.size() >= 7 && data.contactNumber.size() <= 20 && data.contactNumber.matches('^[0-9+\\-\\s()]{7,20}$')
+        && data.collegeName is string && data.collegeName.size() >= 2 && data.collegeName.size() <= 180
+        && data.department is string && data.department.size() >= 1 && data.department.size() <= 120
+        && data.academicYear is string && data.academicYear.size() >= 1 && data.academicYear.size() <= 40
+        && isOptionalString(data, 'studentId', 60)
+        && data.registrationType in ['individual', 'team']
+        && isOptionalString(data, 'teamName', 120)
+        && (!('teamMembers' in data) || (data.teamMembers is list && data.teamMembers.size() <= 10 && (data.teamMembers.size() == 0 || data.teamMembers[0] is map)))
+        && (!('customAnswers' in data) || (data.customAnswers is list && data.customAnswers.size() <= 10 && (data.customAnswers.size() == 0 || data.customAnswers[0] is map)))
+        && data.consentAccepted == true
+        && data.status in ['confirmed', 'waitlisted', 'cancelled']
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidRegistrationLock(data) {
+      return data.keys().hasAll(['eventId', 'registrationId', 'createdAt'])
+        && data.keys().hasOnly(['eventId', 'registrationId', 'createdAt'])
+        && isValidId(data.eventId)
+        && isValidId(data.registrationId)
+        && data.createdAt is timestamp;
+    }
+
+    function isValidMilestone(data) {
+      return data.keys().hasAll(['dateLabel', 'sortOrder', 'title', 'description', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['dateLabel', 'sortOrder', 'title', 'description', 'photoUrl', 'relatedEventId', 'createdAt', 'updatedAt'])
+        && data.dateLabel is string && data.dateLabel.size() >= 1 && data.dateLabel.size() <= 60
+        && data.sortOrder is number && data.sortOrder >= 0 && data.sortOrder <= 10000
+        && data.title is string && data.title.size() >= 1 && data.title.size() <= 160
+        && data.description is string && data.description.size() >= 1 && data.description.size() <= 1500
+        && isOptionalString(data, 'photoUrl', 1000)
+        && isOptionalString(data, 'relatedEventId', 128)
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidAnnouncement(data) {
+      return data.keys().hasAll(['title', 'summary', 'isActive', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['title', 'summary', 'linkUrl', 'linkLabel', 'isActive', 'createdAt', 'updatedAt'])
+        && data.title is string && data.title.size() >= 1 && data.title.size() <= 160
+        && data.summary is string && data.summary.size() >= 1 && data.summary.size() <= 500
+        && isOptionalString(data, 'linkUrl', 500)
+        && isOptionalString(data, 'linkLabel', 60)
+        && data.isActive is bool
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidContactMessage(data) {
+      return data.keys().hasAll(['name', 'email', 'subject', 'message', 'honeypot', 'status', 'createdAt'])
+        && data.keys().hasOnly(['name', 'email', 'subject', 'message', 'honeypot', 'status', 'createdAt'])
+        && data.name is string && data.name.size() >= 2 && data.name.size() <= 120
+        && isValidEmailStr(data.email)
+        && data.subject is string && data.subject.size() >= 2 && data.subject.size() <= 180
+        && data.message is string && data.message.size() >= 10 && data.message.size() <= 3000
+        && data.honeypot is string && data.honeypot.size() == 0
+        && data.status in ['new', 'reviewed', 'resolved']
+        && data.createdAt is timestamp;
+    }
+
+    function isValidMediaAsset(data) {
+      return data.keys().hasAll(['title', 'category', 'url', 'altText', 'createdAt'])
+        && data.keys().hasOnly(['title', 'category', 'url', 'altText', 'associatedEntityId', 'uploadedBy', 'createdAt'])
+        && data.title is string && data.title.size() >= 1 && data.title.size() <= 160
+        && data.category in ['logo', 'hero', 'community', 'team', 'event_poster', 'event_gallery', 'milestone']
+        && data.url is string && data.url.size() >= 1 && data.url.size() <= 1000
+        && data.altText is string && data.altText.size() >= 1 && data.altText.size() <= 300
+        && isOptionalString(data, 'associatedEntityId', 128)
+        && isOptionalString(data, 'uploadedBy', 160)
+        && data.createdAt is timestamp;
+    }
+
+    function isValidActivityLog(data) {
+      return data.keys().hasAll(['actorEmail', 'action', 'section', 'createdAt'])
+        && data.keys().hasOnly(['actorEmail', 'action', 'section', 'createdAt'])
+        && isValidEmailStr(data.actorEmail)
+        && data.action is string && data.action.size() >= 1 && data.action.size() <= 240
+        && data.section is string && data.section.size() >= 1 && data.section.size() <= 80
+        && data.createdAt is timestamp;
+    }
+
+    // -------------------------------------------------------------------------
+    // Collection Rules
+    // -------------------------------------------------------------------------
+
+    match /site_settings/{settingId} {
+      allow get: if isValidId(settingId);
+      allow list: if false;
+      allow create: if isValidId(settingId)
+        && isContentAdmin()
+        && isValidSiteSettings(incoming())
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(settingId)
+        && isContentAdmin()
+        && isValidSiteSettings(incoming())
+        && incoming().updatedAt == request.time;
+      allow delete: if false;
+    }
+
+    match /admins/{adminEmail} {
+      allow get: if isValidEmailDocId(adminEmail)
+        && (
+          isSuperAdmin()
+          || (isVerifiedUser() && request.auth.token.email.lower() == adminEmail)
+        );
+      allow list: if isBootstrappedSuperAdmin()
+        || (isVerifiedUser() && resource.data.email == request.auth.token.email.lower());
+      allow create: if isValidEmailDocId(adminEmail)
+        && isSuperAdmin()
+        && isValidAdminAccount(incoming(), adminEmail)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidEmailDocId(adminEmail)
+        && isSuperAdmin()
+        && isValidAdminAccount(incoming(), adminEmail)
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+      allow delete: if isValidEmailDocId(adminEmail)
+        && isSuperAdmin()
+        && adminEmail != 'eng.apoorv@gmail.com';
+    }
+
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isSuperAdmin() || (isVerifiedUser() && request.auth.uid == userId));
+      allow list: if isBootstrappedSuperAdmin();
+      allow create: if isValidId(userId)
+        && isVerifiedUser()
+        && request.auth.uid == userId
+        && isValidUserProfile(incoming(), userId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(userId)
+        && isVerifiedUser()
+        && request.auth.uid == userId
+        && isValidUserProfile(incoming(), userId)
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+      allow delete: if false;
+    }
+
+    match /team_members/{memberId} {
+      allow get: if isValidId(memberId) && (existing().isActive == true || isTeamAdmin());
+      allow list: if resource.data.isActive == true || isTeamAdmin();
+      allow create: if isValidId(memberId)
+        && isTeamAdmin()
+        && isValidTeamMember(incoming())
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(memberId)
+        && isTeamAdmin()
+        && isValidTeamMember(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+      allow delete: if isValidId(memberId) && isTeamAdmin();
+    }
+
+    match /events/{eventId} {
+      allow get: if isValidId(eventId) && (existing().isPublished == true || isEventAdmin());
+      allow list: if resource.data.isPublished == true || isEventAdmin();
+      allow create: if isValidId(eventId)
+        && isEventAdmin()
+        && isValidCommunityEvent(incoming())
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(eventId)
+        && isEventAdmin()
+        && isValidCommunityEvent(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+      allow delete: if isValidId(eventId) && isEventAdmin();
+    }
+
+    match /registrations/{registrationId} {
+      allow get: if isValidId(registrationId) && isEventAdmin();
+      allow list: if isBootstrappedSuperAdmin() || (isVerifiedUser() && isEventAdmin());
+      allow create: if isValidId(registrationId)
+        && isValidRegistration(incoming())
+        && incoming().status == 'confirmed'
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time
+        && exists(/databases/$(database)/documents/events/$(incoming().eventId))
+        && get(/databases/$(database)/documents/events/$(incoming().eventId)).data.registrationOpen == true
+        && get(/databases/$(database)/documents/events/$(incoming().eventId)).data.isPublished == true
+        && existsAfter(/databases/$(database)/documents/registration_locks/$(incoming().lockId))
+        && getAfter(/databases/$(database)/documents/registration_locks/$(incoming().lockId)).data.registrationId == registrationId
+        && getAfter(/databases/$(database)/documents/registration_locks/$(incoming().lockId)).data.eventId == incoming().eventId;
+      allow update: if isValidId(registrationId)
+        && isEventAdmin()
+        && isValidRegistration(incoming())
+        && incoming().eventId == existing().eventId
+        && incoming().lockId == existing().lockId
+        && incoming().registrationCode == existing().registrationCode
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt']);
+      allow delete: if isValidId(registrationId) && isEventAdmin();
+    }
+
+    match /registration_locks/{lockId} {
+      allow read: if false;
+      allow create: if isValidLockId(lockId)
+        && isValidRegistrationLock(incoming())
+        && incoming().createdAt == request.time
+        && lockId.matches('^' + incoming().eventId + '__.*')
+        && existsAfter(/databases/$(database)/documents/registrations/$(incoming().registrationId))
+        && getAfter(/databases/$(database)/documents/registrations/$(incoming().registrationId)).data.lockId == lockId;
+      allow update: if false;
+      allow delete: if isValidLockId(lockId) && isEventAdmin();
+    }
+
+    match /milestones/{milestoneId} {
+      allow get: if isValidId(milestoneId);
+      allow list: if true;
+      allow create: if isValidId(milestoneId)
+        && isContentAdmin()
+        && isValidMilestone(incoming())
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(milestoneId)
+        && isContentAdmin()
+        && isValidMilestone(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+      allow delete: if isValidId(milestoneId) && isContentAdmin();
+    }
+
+    match /announcements/{announcementId} {
+      allow get: if isValidId(announcementId) && (existing().isActive == true || isContentAdmin());
+      allow list: if resource.data.isActive == true || isContentAdmin();
+      allow create: if isValidId(announcementId)
+        && isContentAdmin()
+        && isValidAnnouncement(incoming())
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(announcementId)
+        && isContentAdmin()
+        && isValidAnnouncement(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+      allow delete: if isValidId(announcementId) && isContentAdmin();
+    }
+
+    match /contact_messages/{messageId} {
+      allow get: if isValidId(messageId) && isAnyAdmin();
+      allow list: if isBootstrappedSuperAdmin() || (isVerifiedUser() && isAnyAdmin());
+      allow create: if isValidId(messageId)
+        && isValidContactMessage(incoming())
+        && incoming().status == 'new'
+        && incoming().createdAt == request.time;
+      allow update: if isValidId(messageId)
+        && isAnyAdmin()
+        && isValidContactMessage(incoming())
+        && incoming().name == existing().name
+        && incoming().email == existing().email
+        && incoming().subject == existing().subject
+        && incoming().message == existing().message
+        && incoming().honeypot == existing().honeypot
+        && incoming().createdAt == existing().createdAt
+        && incoming().diff(existing()).affectedKeys().hasOnly(['status']);
+      allow delete: if isValidId(messageId) && isAnyAdmin();
+    }
+
+    match /media_assets/{assetId} {
+      allow get: if isValidId(assetId);
+      allow list: if true;
+      allow create: if isValidId(assetId)
+        && isAnyAdmin()
+        && isValidMediaAsset(incoming())
+        && incoming().createdAt == request.time;
+      allow update: if isValidId(assetId)
+        && isAnyAdmin()
+        && isValidMediaAsset(incoming())
+        && incoming().createdAt == existing().createdAt;
+      allow delete: if isValidId(assetId) && isAnyAdmin();
+    }
+
+    match /activity_logs/{logId} {
+      allow get: if isValidId(logId) && isAnyAdmin();
+      allow list: if isBootstrappedSuperAdmin() || (isVerifiedUser() && isAnyAdmin());
+      allow create: if isValidId(logId)
+        && isAnyAdmin()
+        && isValidActivityLog(incoming())
+        && incoming().createdAt == request.time;
+      allow update: if false;
+      allow delete: if isValidId(logId) && isSuperAdmin();
+    }
+  }
+}

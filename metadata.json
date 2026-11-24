@@ -1,0 +1,8 @@
+{
+  "name": "AWS Student Builder Group – UCER",
+  "description": "Official community platform, events hub, and management console for the Student Builder Group – AWS at United College of Engineering & Research (UCER), Prayagraj, Uttar Pradesh, India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

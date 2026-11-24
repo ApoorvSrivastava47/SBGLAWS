@@ -1,0 +1,354 @@
+{
+  "entities": {
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global editable content, brand logo slots, community statistics, and contact details.",
+      "type": "object",
+      "properties": {
+        "heroHeadline": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "heroSubheadline": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "heroDescription": { "type": "string", "minLength": 1, "maxLength": 600 },
+        "heroPhotoUrl": { "type": "string", "maxLength": 1000 },
+        "campusSessionPhotoUrl": { "type": "string", "maxLength": 1000 },
+        "awsLogoUrl": { "type": "string", "maxLength": 1000 },
+        "ucerLogoUrl": { "type": "string", "maxLength": 1000 },
+        "introTitle": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "introBody": { "type": "string", "minLength": 1, "maxLength": 2500 },
+        "collagePhotoUrls": { "type": "array", "description": "Up to 6 community collage photograph URLs." },
+        "statsConfigured": { "type": "boolean" },
+        "statsTotalMembers": { "type": "number" },
+        "statsEventsConducted": { "type": "number" },
+        "statsWorkshopsOrganised": { "type": "number" },
+        "statsProjectsDeveloped": { "type": "number" },
+        "aboutStoryTitle": { "type": "string", "maxLength": 160 },
+        "aboutStoryBody": { "type": "string", "maxLength": 4000 },
+        "aboutVision": { "type": "string", "maxLength": 600 },
+        "aboutMission": { "type": "array", "description": "List of mission statements." },
+        "aboutObjectives": { "type": "array", "description": "List of objective objects with title and description." },
+        "contactEmail": { "type": "string", "maxLength": 160 },
+        "contactAddress": { "type": "string", "maxLength": 400 },
+        "facultyCoordinatorContact": { "type": "string", "maxLength": 240 },
+        "linkedinUrl": { "type": "string", "maxLength": 500 },
+        "instagramUrl": { "type": "string", "maxLength": 500 },
+        "githubUrl": { "type": "string", "maxLength": 500 },
+        "mapEmbedUrl": { "type": "string", "maxLength": 1000 },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "updatedBy": { "type": "string", "maxLength": 160 }
+      },
+      "required": [
+        "heroHeadline",
+        "heroSubheadline",
+        "heroDescription",
+        "introTitle",
+        "introBody",
+        "statsConfigured",
+        "updatedAt",
+        "updatedBy"
+      ]
+    },
+    "AdminAccount": {
+      "title": "AdminAccount",
+      "description": "Authorized administrator role record keyed by lowercase email address.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "minLength": 5, "maxLength": 160, "pattern": "^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "role": { "type": "string", "enum": ["super_admin", "event_admin", "content_admin", "team_admin"] },
+        "isActive": { "type": "boolean" },
+        "addedBy": { "type": "string", "maxLength": 160 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "displayName", "role", "isActive", "createdAt", "updatedAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated user session profile.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "minLength": 5, "maxLength": 160 },
+        "displayName": { "type": "string", "maxLength": 120 },
+        "photoUrl": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "createdAt", "updatedAt"]
+    },
+    "TeamMember": {
+      "title": "TeamMember",
+      "description": "Community member, faculty mentor, or student leader profile.",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "designation": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Faculty Coordinators and Mentors",
+            "Community Leadership",
+            "Technical Leadership",
+            "Operations and Management",
+            "Technical Team",
+            "Event Management",
+            "Community and Outreach",
+            "General Members"
+          ]
+        },
+        "department": { "type": "string", "maxLength": 120 },
+        "academicYear": { "type": "string", "maxLength": 40 },
+        "responsibility": { "type": "string", "maxLength": 300 },
+        "bio": { "type": "string", "maxLength": 1000 },
+        "photoUrl": { "type": "string", "maxLength": 1000 },
+        "linkedinUrl": { "type": "string", "maxLength": 500 },
+        "githubUrl": { "type": "string", "maxLength": 500 },
+        "hierarchyOrder": { "type": "number" },
+        "isFeatured": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "fullName",
+        "designation",
+        "category",
+        "hierarchyOrder",
+        "isFeatured",
+        "isActive",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CommunityEvent": {
+      "title": "CommunityEvent",
+      "description": "Community event, workshop, or hackathon with configurable eligibility and registration form.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "slug": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "category": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "statusOverride": { "type": "string", "enum": ["auto", "upcoming", "ongoing", "past"] },
+        "startDate": { "type": "string", "minLength": 4, "maxLength": 40 },
+        "endDate": { "type": "string", "minLength": 4, "maxLength": 40 },
+        "timeLabel": { "type": "string", "maxLength": 80 },
+        "venue": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "posterUrl": { "type": "string", "maxLength": 1000 },
+        "shortDescription": { "type": "string", "minLength": 1, "maxLength": 400 },
+        "fullDescription": { "type": "string", "minLength": 1, "maxLength": 5000 },
+        "instructions": { "type": "string", "maxLength": 2000 },
+        "highlights": { "type": "array", "description": "Up to 15 event highlight strings." },
+        "winnersSummary": { "type": "string", "maxLength": 1500 },
+        "participationSummary": { "type": "string", "maxLength": 400 },
+        "organisingTeamNames": { "type": "array", "description": "Up to 20 organiser names or roles." },
+        "galleryUrls": { "type": "array", "description": "Up to 20 gallery image URLs." },
+        "eligibilityScope": { "type": "string", "enum": ["ucer_only", "open_college"] },
+        "registrationMode": { "type": "string", "enum": ["individual", "team", "both"] },
+        "maxTeamSize": { "type": "number" },
+        "requireStudentId": { "type": "boolean" },
+        "registrationOpen": { "type": "boolean" },
+        "registrationDeadline": { "type": "string", "maxLength": 40 },
+        "customQuestions": { "type": "array", "description": "Up to 10 custom registration question objects." },
+        "isPublished": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "title",
+        "slug",
+        "category",
+        "statusOverride",
+        "startDate",
+        "endDate",
+        "venue",
+        "shortDescription",
+        "fullDescription",
+        "eligibilityScope",
+        "registrationMode",
+        "registrationOpen",
+        "isPublished",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "EventRegistration": {
+      "title": "EventRegistration",
+      "description": "Participant registration submission for an event (PII restricted to admins).",
+      "type": "object",
+      "properties": {
+        "eventId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "eventTitle": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "registrationCode": { "type": "string", "minLength": 6, "maxLength": 32, "pattern": "^[A-Z0-9\\-]+$" },
+        "lockId": { "type": "string", "minLength": 3, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "collegeEmail": { "type": "string", "minLength": 5, "maxLength": 160, "pattern": "^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$" },
+        "contactNumber": { "type": "string", "minLength": 7, "maxLength": 20, "pattern": "^[0-9+\\-\\s()]{7,20}$" },
+        "collegeName": { "type": "string", "minLength": 2, "maxLength": 180 },
+        "department": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "academicYear": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "studentId": { "type": "string", "maxLength": 60 },
+        "registrationType": { "type": "string", "enum": ["individual", "team"] },
+        "teamName": { "type": "string", "maxLength": 120 },
+        "teamMembers": { "type": "array", "description": "Up to 10 team member objects." },
+        "customAnswers": { "type": "array", "description": "Up to 10 question/answer pairs." },
+        "consentAccepted": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["confirmed", "waitlisted", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "eventId",
+        "eventTitle",
+        "registrationCode",
+        "lockId",
+        "fullName",
+        "collegeEmail",
+        "contactNumber",
+        "collegeName",
+        "department",
+        "academicYear",
+        "registrationType",
+        "consentAccepted",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "RegistrationLock": {
+      "title": "RegistrationLock",
+      "description": "Atomic duplicate-prevention lock document keyed by eventId__normalizedEmail.",
+      "type": "object",
+      "properties": {
+        "eventId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "registrationId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["eventId", "registrationId", "createdAt"]
+    },
+    "Milestone": {
+      "title": "Milestone",
+      "description": "Chronological community journey milestone on About Us.",
+      "type": "object",
+      "properties": {
+        "dateLabel": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "sortOrder": { "type": "number" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 1500 },
+        "photoUrl": { "type": "string", "maxLength": 1000 },
+        "relatedEventId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["dateLabel", "sortOrder", "title", "description", "createdAt", "updatedAt"]
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "Public community announcement banner or update.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "summary": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "linkUrl": { "type": "string", "maxLength": 500 },
+        "linkLabel": { "type": "string", "maxLength": 60 },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "summary", "isActive", "createdAt", "updatedAt"]
+    },
+    "ContactMessage": {
+      "title": "ContactMessage",
+      "description": "Contact inquiry submitted by public visitors (PII restricted to admins).",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "email": { "type": "string", "minLength": 5, "maxLength": 160, "pattern": "^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$" },
+        "subject": { "type": "string", "minLength": 2, "maxLength": 180 },
+        "message": { "type": "string", "minLength": 10, "maxLength": 3000 },
+        "honeypot": { "type": "string", "maxLength": 0 },
+        "status": { "type": "string", "enum": ["new", "reviewed", "resolved"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "subject", "message", "honeypot", "status", "createdAt"]
+    },
+    "MediaAsset": {
+      "title": "MediaAsset",
+      "description": "Central media library image metadata record.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "category": {
+          "type": "string",
+          "enum": ["logo", "hero", "community", "team", "event_poster", "event_gallery", "milestone"]
+        },
+        "url": { "type": "string", "minLength": 1, "maxLength": 1000 },
+        "altText": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "associatedEntityId": { "type": "string", "maxLength": 128 },
+        "uploadedBy": { "type": "string", "maxLength": 160 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "category", "url", "altText", "createdAt"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Recent administrative update log for dashboard auditability.",
+      "type": "object",
+      "properties": {
+        "actorEmail": { "type": "string", "minLength": 5, "maxLength": 160 },
+        "action": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "section": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["actorEmail", "action", "section", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/site_settings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Editable global site configuration and placeholders."
+    },
+    "/admins/{adminEmail}": {
+      "schema": { "$ref": "#/entities/AdminAccount" },
+      "description": "Allowlisted administrator roles keyed by lowercase email."
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Signed-in user basic profile."
+    },
+    "/team_members/{memberId}": {
+      "schema": { "$ref": "#/entities/TeamMember" },
+      "description": "Community team members and faculty coordinators."
+    },
+    "/events/{eventId}": {
+      "schema": { "$ref": "#/entities/CommunityEvent" },
+      "description": "Community events, workshops, and past archive records."
+    },
+    "/registrations/{registrationId}": {
+      "schema": { "$ref": "#/entities/EventRegistration" },
+      "description": "Event registration submissions (PII protected)."
+    },
+    "/registration_locks/{lockId}": {
+      "schema": { "$ref": "#/entities/RegistrationLock" },
+      "description": "Atomic duplicate-registration guard keyed by eventId__emailKey."
+    },
+    "/milestones/{milestoneId}": {
+      "schema": { "$ref": "#/entities/Milestone" },
+      "description": "Chronological timeline milestones for About Us."
+    },
+    "/announcements/{announcementId}": {
+      "schema": { "$ref": "#/entities/Announcement" },
+      "description": "Community announcements."
+    },
+    "/contact_messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ContactMessage" },
+      "description": "Public contact inquiries (PII protected)."
+    },
+    "/media_assets/{assetId}": {
+      "schema": { "$ref": "#/entities/MediaAsset" },
+      "description": "Central media library assets."
+    },
+    "/activity_logs/{logId}": {
+      "schema": { "$ref": "#/entities/ActivityLog" },
+      "description": "Recent website updates log for Admin Dashboard."
+    }
+  }
+}
