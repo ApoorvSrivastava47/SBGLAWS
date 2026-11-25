@@ -224,10 +224,24 @@ export function PlatformProvider({ children }: { children: React.ReactNode }) {
     const unsubTeam = onSnapshot(
       teamQuery,
       (snap) => {
-        const remoteItems: TeamMember[] = snap.docs.map((d) => ({
-          id: d.id,
-          ...(d.data() as Omit<TeamMember, 'id'>),
-        }));
+        const coreByName = new Map(
+          CORE_TEAM_MEMBERS.map((core) => [core.fullName.trim().toLowerCase(), core])
+        );
+        const remoteItems: TeamMember[] = snap.docs.map((d) => {
+          const item: TeamMember = {
+            id: d.id,
+            ...(d.data() as Omit<TeamMember, 'id'>),
+          };
+          const coreMatch = coreByName.get(item.fullName.trim().toLowerCase());
+          if (!coreMatch) return item;
+          return {
+            ...item,
+            photoUrl: item.photoUrl?.trim() ? item.photoUrl : coreMatch.photoUrl,
+            imageClassName: item.imageClassName?.trim()
+              ? item.imageClassName
+              : coreMatch.imageClassName,
+          };
+        });
         const remoteNames = new Set(
           remoteItems.map((m) => m.fullName.trim().toLowerCase())
         );
